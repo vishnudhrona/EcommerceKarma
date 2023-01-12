@@ -1,0 +1,53 @@
+
+<div class="clearfix"></div>
+	
+  <div class="content-wrapper">
+    <div class="container-fluid">
+
+    <div class="row mt-3">
+      <div class="col-md-12">
+         <div class="card">
+           <div class="card-body">
+           <div class="card-title">Edit Category</div>
+           <hr>
+            <form action="/admin/editcategory?id={{response._id}}" method="post" enctype="multipart/form-data">
+           <div class="form-group">
+            <label for="input-1">Category Name</label>
+            <input type="text" name="categoryname" class="form-control" id="input-1" placeholder="Enter Category Name" value="{{response.categoryname}}">
+           </div>
+           <div class="form-group">
+            <label for="input-4">Description</label>
+            <input type="text" name="description" value="{{response.description}}" class="form-control" id="input-4" placeholder="Enter Description">
+           </div>
+           {{!-- <div class="form-group py-2">
+             <div class="icheck-material-white">
+            <input type="checkbox" id="user-checkbox1" checked=""/>
+            <label for="user-checkbox1">I Agree Terms & Conditions</label>
+            </div>
+           </div> --}}
+           <div class="form-group">
+            <button type="submit" class="btn btn-light px-5"><i class="icon-lock"></i>Update</button>
+          </div>
+          </form>
+         </div>
+         </div>
+      </div>
+
+      <!--End Row-->
+
+	<!--start overlay-->
+		  <div class="overlay toggle-menu"></div>
+		<!--end overlay-->
+
+    </div>
+    <!-- End container-fluid-->
+    
+   </div><!--End content-wrapper-->
+   <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+	
+	
+
+
+  

@@ -1,0 +1,210 @@
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container" style="padding-top: 80px;">
+        <form action="" method="post">
+            <div class="cupon_area">
+                <div class="check_title">
+                    <h2>Have a coupon? <a href="#">Click here to enter your code</a></h2>
+                </div>
+                <input type="text" name="coupon" id="couponCode" placeholder="Enter coupon code">
+                <button class="tp_btn" onclick="applyCoupon()">Apply Coupo</button>
+            </div>
+        </form>
+        {{#each address}}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Delivery Address</h5>
+                <p class="card-text" id="address">{{this.name}} {{this.number}}<br>{{this.house}},
+                    {{this.street}}, {{this.city}},<br>{{this.country}}-{{this.zip}}</p>
+                <button class="btn btn-primary"
+                    onclick="fill('{{this.name}}','{{this.number}}','{{this.house}}','{{this.street}}','{{this.city}}','{{this.country}}','{{this.zip}}')">Fill</button>
+            </div>
+        </div>
+        {{/each}}
+        <div class="billing_details">
+            <div class="row">
+                <form class="row contact_form" id="checkoutForm" action="" method="post" novalidate="novalidate">
+                <div class="col-md-8">
+                    <h3>Billing Details</h3>
+                    
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="contactName" name="name"
+                                onkeyup="validateName()">
+                            <span class="placeholder" data-placeholder="Name" id="nameError"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="contactNumber" name="number"
+                                onkeyup="validatePhoneNumber()">
+                            <input type="text" name="userId" id="" value="{{logIn._id}}" hidden>
+                            <span class="placeholder" data-placeholder="Phone number" id="numberError"></span>
+                        </div>
+
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="contactHouse" name="house"
+                                onkeyup="validateHouse()">
+                            <span class="placeholder" data-placeholder="House/Work" id="houseError"></span>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="street" name="city">
+                            <span class="placeholder" data-placeholder="Street"></span>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="city" name="town">
+                            <span class="placeholder" data-placeholder="Town/City"></span>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="country" name="country">
+                            <span class="placeholder" data-placeholder="Country"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
+                        </div>
+                        <div class="p-4">
+                            <button class="primary-btn" type="submit">Checkout</button>
+                            <span class="text-danger" id="submitError"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="creat_account">
+                                <input type="checkbox" id="f-option2" name="selector">
+                                <label for="f-option2">Create an account?</label>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="order_box">
+
+                        <ul class="list list_2">
+                            <li><a href="#">Total Payable<span>{{total.[0]}}</span></a></li>
+                        </ul>
+                        <div class="payment_item">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option5" name="paymentMethod" value="COD">
+                                <span id="codError"></span>
+                                <label for="f-option5">COD</label>
+                                <div class="check"></div>
+                            </div>
+                            <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
+                                Store Postcode.</p>
+                        </div>
+                        <div class="payment_item active">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option6" name="paymentMethod" value="ONLINE">
+                                <label for="f-option6">Online Payment </label>
+                                <img src="img/product/card.jpg" alt="">
+                                <div class="check"></div>
+                            </div>
+                            <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
+                                account.</p>
+                        </div>
+                        <div class="creat_account">
+                            <input type="checkbox" id="f-option4" name="selector">
+                            <label for="f-option4">I’ve read and accept the </label>
+                            <a href="#">terms & conditions*</a>
+                        </div>
+                    </div>
+                </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<script src="javascript/validation.js"></script>
+<script src="javascript/script.js"></script>
+
+<script>
+    var nameError = document.getElementById("nameError");
+    var phoneError = document.getElementById("numberError");
+    var submitError = document.getElementById("submitError");
+    var houseError = document.getElementById('houseError')
+
+    function validateName() {
+        var name = document.getElementById("contactName").value;
+        if (name.length == 0) {
+            nameError.innerHTML = 'First Name required';
+            return false;
+        }
+        if (!name.match(/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/)) {
+            nameError.innerHTML = 'Invalid name';
+            return false;
+        }
+        else {
+            nameError.innerHTML = '';
+            return true;
+        }
+
+    }
+
+    function validatePhoneNumber() {
+        var phoneNumber = document.getElementById("contactNumber").value;
+        if (phoneNumber.length == 0) {
+            phoneError.innerHTML = "Phone Number Required";
+            return false;
+        }
+        if (!phoneNumber.match(/^(\+\d{1,3}[- ]?)?\d{10}$/)) {
+            phoneError.innerHTML = "Enter a valid Mobile Number";
+            return false;
+        }
+        phoneError.innerHTML = "";
+        return true;
+    }
+
+    function validateHouse() {
+        var house = document.getElementById("contactHouse").value;
+        if (house.length == 0) {
+            houseError.innerHTML = 'Address required';
+            return false;
+        }
+        if (!house.match(/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/)) {
+            houseError.innerHTML = 'Invalid address';
+            return false;
+        }
+        else {
+            houseError.innerHTML = '';
+            return true;
+        }
+
+    }
+
+    function validateForm() {
+        if (!validateName() || !validatePhoneNumber() || validateHouse() || !validatePassword()) {
+
+            submitError.innerHTML = 'Please fill the fields to submit';
+            setTimeout(function () { submitError.style.display = 'none'; }, 4000)
+            return false;
+        }
+
+    }
+</script>
+
+
+<script>
+    function applyCoupon() {
+        let coupon = document.getElementById('couponCode').value;
+        console.log(coupon, 'uuuuuuuiiiiiiiiiii');
+        $.ajax({
+            url: '/applycoupon',
+            data: {
+                couponCode: coupon
+            },
+            method: 'post',
+            success: (response) => {
+                console.log(response, 'eeeeerrrrrrrr')
+            }
+        })
+    }
+</script>
+
+<!--================End Checkout Area =================-->
+<script>
+    function fill(name, number, house, street, city, country, zip) {
+        document.getElementById('contactName').value = name
+        document.getElementById('contactNumber').value = number
+        document.getElementById('contactHouse').value = house
+        document.getElementById('street').value = street
+        document.getElementById('city').value = city
+        document.getElementById('country').value = country
+        document.getElementById('zip').value = zip
+    }
+</script>

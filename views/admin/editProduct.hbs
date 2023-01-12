@@ -1,0 +1,106 @@
+<body>
+
+
+  <div class="clearfix"></div>
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">EditProduct</div>
+              <hr>
+              <form action="/admin/editproduct?id={{products._id}}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="input-1">Name</label>
+                  <input type="text" name="name" value="{{products.name}}" class="form-control" id="input-1"
+                    placeholder="Enter Your Name">
+                </div>
+                <div class="form-group">
+                  
+                    <label for="input-2">Category</label>
+                    
+                    <select class="form-control" name="category" aria-label="Default select example">
+                      {{#each category}}
+                      <option  value="{{this.categoryname}}">{{this.categoryname}}</option>
+                      {{/each}}
+                    </select>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="input-3">Price</label>
+                  <input type="text" name="price" value="{{products.price}}" class="form-control" id="input-3"
+                    placeholder="Enter Your Price">
+                </div>
+                <div class="form-group">
+                  <label for="input-3">Offer Price</label>
+                  <input type="text" name="price" value="{{products.offerprice}}" class="form-control" id="input-3"
+                    placeholder="Enter Your Price">
+                </div>
+                <div class="form-group">
+                  <label for="input-4">Description</label>
+                  <input type="text" name="description" value="{{products.description}}" class="form-control"
+                    id="input-4" placeholder="Enter Description">
+                </div>
+                <div class="form-group">
+                  <label for="input-5">Image</label>
+                  <img src="/productImage/{{products.image1}}" alt="" style="width: 100px; height: auto;" id="imgView">
+                  <input type="file" name="image1" class="form-control" id="input-5" placeholder="Upload Image"
+                    onchange="viewImage(event)">
+                </div>
+                <div class="form-group">
+                  <label for="input-5">Image</label>
+                  <img src="/productImage/{{products.image2}}" alt="" style="width: 100px; height: auto;" id="imgView">
+                  <input type="file" name="image2" class="form-control" id="input-5" placeholder="Upload Image"
+                    onchange="viewImage(event)">
+                </div>
+                <div class="form-group">
+                  <label for="input-5">Image</label>
+                  <img src="/productImage/{{products.image3}}" alt="" style="width: 100px; height: auto;" id="imgView">
+                  <input type="file" name="image3" class="form-control" id="input-5" placeholder="Upload Image"
+                    onchange="viewImage(event)">
+                </div>
+                <div class="form-group">
+                  <label for="input-5">Image</label>
+                  <img src="/productImage/{{products.image4}}" alt="" style="width: 100px; height: auto;" id="imgView">
+                  <input type="file" name="image4" class="form-control" id="input-5" placeholder="Upload Image"
+                    onchange="viewImage(event)">
+                </div>
+                {{!-- <div class="form-group py-2">
+                  <div class="icheck-material-white">
+                    <input type="checkbox" id="user-checkbox1" checked="" />
+                    <label for="user-checkbox1">I Agree Terms & Conditions</label>
+                  </div>
+                </div> --}}
+                <div class="form-group">
+                  <button type="submit" class="btn btn-light px-5"><i class="icon-lock"></i>Update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!--End Row-->
+
+        <!--start overlay-->
+        <div class="overlay toggle-menu"></div>
+        <!--end overlay-->
+
+      </div>
+      <!-- End container-fluid-->
+
+    </div>
+    <!--End content-wrapper-->
+    <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+
+    </section>
+
+    <script>
+      function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+      }
+    </script>

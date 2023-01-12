@@ -1,0 +1,152 @@
+
+<div class="clearfix"></div>
+	
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <div class="row ">
+        <div class="col-md-12 p-3">
+          <div class="card ">
+            <div class="card-body">
+              <h5 class="card-title">Product details</h5>
+			  <div class="table-responsive">
+               <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Payment Mode</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">status</th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Activities</th>
+                    </tr>
+                  </thead>
+                  {{#each allOrder}}
+                  <tbody>
+                    <tr>
+                      <th scope="row">{{math @index "+"1}}</th>
+                      <td>{{this.deliveryDetails.name}}<br>{{this.deliveryDetails.number}}<br>{{this.deliveryDetails.city}}<br>Zip:{{this.deliveryDetails.zip}}</td>
+                      <td>{{this.paymentMethod}}</td>
+                      <td>{{this.totalAmount}}</td>
+                      <td>{{this.status}}</td>
+                      <td><a href="/admin/viewproduct?id={{this._id}}" class="btn btn-primary">View</a></td>
+
+                      <td>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            Action
+                          </button>
+                          <div class="dropdown-menu">
+                            {{#isEqual this.status 'placed'}}
+                            <a class="dropdown-item" href="/admin/productshipped?id={{../this._id}}">Shipped</a>
+                            <a class="dropdown-item" href="/admin/productcancel?id={{../this._id}}">Cancel Order</a>
+                            {{/isEqual}}
+                            {{#isEqual this.status 'shipped'}}
+                            <a class="dropdown-item" href="/admin/productdelivered?id={{../this._id}}">Delivered</a>
+                            <a class="dropdown-item" href="/admin/productcancel?id={{../this._id}}">Cancel Order</a>
+                            {{/isEqual}}
+                            {{#isEqual this.status 'delivered'}}
+                            <h5 style="color: greenyellow;">Delivered</h5>
+                            {{/isEqual}}
+
+
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  {{/each}}
+                </table>
+            </div>
+            </div>
+          </div>
+        </div>
+	  
+	  <!--start overlay-->
+		  <div class="overlay toggle-menu"></div>
+		<!--end overlay-->
+
+    </div>
+    <!-- End container-fluid-->
+    
+    </div><!--End content-wrapper-->
+   <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+	
+	{{!-- <!--Start footer-->
+	<footer class="footer">
+      <div class="container">
+        <div class="text-center">
+          Copyright © 2018 Dashtreme Admin
+        </div>
+      </div>
+    </footer>
+	<!--End footer-->
+	
+	<!--start color switcher-->
+   <div class="right-sidebar">
+    <div class="switcher-icon">
+      <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+    </div>
+    <div class="right-sidebar-content">
+
+      <p class="mb-0">Gaussion Texture</p>
+      <hr>
+      
+      <ul class="switcher">
+        <li id="theme1"></li>
+        <li id="theme2"></li>
+        <li id="theme3"></li>
+        <li id="theme4"></li>
+        <li id="theme5"></li>
+        <li id="theme6"></li>
+      </ul>
+
+      <p class="mb-0">Gradient Background</p>
+      <hr>
+      
+      <ul class="switcher">
+        <li id="theme7"></li>
+        <li id="theme8"></li>
+        <li id="theme9"></li>
+        <li id="theme10"></li>
+        <li id="theme11"></li>
+        <li id="theme12"></li>
+		<li id="theme13"></li>
+        <li id="theme14"></li>
+        <li id="theme15"></li>
+      </ul>
+      
+     </div>
+   </div>
+  <!--end color switcher-->
+   
+  </div><!--End wrapper-->
+
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/popper.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+	
+  <!-- simplebar js -->
+  <script src="assets/plugins/simplebar/js/simplebar.js"></script>
+  <!-- sidebar-menu js -->
+  <script src="assets/js/sidebar-menu.js"></script>
+  
+  <!-- Custom scripts -->
+  <script src="assets/js/app-script.js"></script>
+	
+</body>
+</html> --}}
+<div class="product__pagination mt-5">
+            {{#each pageCount}}
+           <a href="/admin/ordermanagement?id={{this}}" class="text-white"> <button class="btn btn-secondary rounded">{{this}}</button> </a>   
+						{{/each}}
+						  {{!-- {{#unless (next to last page)}} --}}
+            <a href="#"><i class="fa-sharp fa-solid fa-circle-chevron-right text-muted" ></i></a>
+						     {{!-- {{/unless}} --}}
+          </div>

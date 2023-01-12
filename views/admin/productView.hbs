@@ -1,0 +1,31 @@
+<section>
+    {{#each oneProduct}}
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="card text-black">
+          <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
+          <img src="/productImage/{{this.product._id}}.jpg"
+            class="card-img-top" alt="Apple Computer" />
+          <div class="card-body">
+            <div class="text-center">
+              <h5 class="card-title">{{this.product.name}}</h5>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between">
+                <span>Category</span><span>{{this.product.category}}</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>Description</span><span>{{this.product.description}}</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>Price</span><span>{{this.product.price}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</section>

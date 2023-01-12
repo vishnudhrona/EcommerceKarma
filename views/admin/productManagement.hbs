@@ -1,0 +1,152 @@
+   
+
+<div class="clearfix"></div>
+	
+  <div class="content-wrapper">
+    <div class="container-fluid">
+     
+      {{!-- <div class="row mt-3">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Basic Table</h5>
+			  <div class="table-responsive">
+               <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">First</th>
+                      <th scope="col">Last</th>
+                      <th scope="col">Handle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Bordered Table</h5>
+			  <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div><!--End Row--> --}}
+
+
+      <div class="row ">
+        <a class="btn btn-primary ml-5" href="/admin/addproduct">Add Product</a>
+        <div class="col-md-12 p-3">
+          <div class="card ">
+            <div class="card-body">
+              <h5 class="card-title">Product details</h5>
+			  <div class="table-responsive">
+               <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Offer Price</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Image</th>
+                      <th scope="col">Activities</th>
+                    </tr>
+                  </thead>
+                  {{#each products}}
+                  <tbody>
+                    <tr>
+                      <th scope="row">{{math @index "+"1}}</th>
+                      <td>{{this.name}}</td>
+                      <td>{{this.category}}</td>
+                      <td>{{this.price}}</td>
+                      <td>{{this.offerprice}}</td>
+                      <td>{{this.description}}</td>
+                      <td><img style="height: 50px; width: 50px;" src='/productImage/{{this.image1}}' alt=""></td>
+                      <td>
+                        <a href="/admin/editproduct?id={{this._id}}" class="btn btn-primary">Edit</a>
+                        <a href="/admin/deleteproduct/{{this._id}}" class="btn btn-danger">Delete</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                  {{/each}}
+                </table>
+            </div>
+            </div>
+          </div>
+        </div>
+        
+	  
+	  <!--start overlay-->
+		  <div class="overlay toggle-menu"></div>
+		<!--end overlay-->
+
+    </div>
+    <!-- End container-fluid-->
+    
+    </div><!--End content-wrapper-->
+   <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+	
+	<div class="product__pagination mt-5">
+            {{#each pageCount}}
+           <a href="/admin/productmanagement?id={{this}}" class="text-white"> <button class="btn btn-secondary rounded">{{this}}</button> </a>   
+						{{/each}}
+						  {{!-- {{#unless (next to last page)}} --}}
+            <a href="#"><i class="fa-sharp fa-solid fa-circle-chevron-right text-muted" ></i></a>
+						     {{!-- {{/unless}} --}}
+          </div>

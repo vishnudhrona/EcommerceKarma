@@ -1,0 +1,50 @@
+ <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container ">
+            <div class="billing_details ">
+                <div class=" row">
+                    <div class="col-md-12">
+                        <h3>Add Your Address</h3>
+                        <form class="row contact_form" id="" action="/addaddress" method="post" novalidate="novalidate">
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="contactName" name="name" onkeyup="validateNmae()">
+                                <span class="placeholder" data-placeholder="First name" id="fname-error"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="number" name="number">
+                                <input type="text" name="userId" id="" value="{{logIn._id}}" hidden>
+                                <span class="placeholder" data-placeholder="Phone number"></span>
+                            </div>
+
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="contactEmail" name="house" onkeyup="validateEmail()">
+                                <span class="placeholder" data-placeholder="House/Office" id="email-error"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="street" name="street">
+                                <span class="placeholder" data-placeholder="Street"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="city" name="city">
+                                <span class="placeholder" data-placeholder="Town/City"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="country" name="country">
+                                <span class="placeholder" data-placeholder="Country"></span>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
+                            </div>
+                            <div class="p-4">
+                                <button class="primary-btn" type="submit">Add Address</button>
+                                <span class="text-danger" id="submit-error"></span>
+                            </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{!-- <script src="javascript/validation.js"></script> --}}
+
+    <!--================End Checkout Area =================-->

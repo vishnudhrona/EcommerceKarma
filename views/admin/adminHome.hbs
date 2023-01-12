@@ -1,0 +1,189 @@
+<body>
+
+<div class="clearfix"></div>
+	
+  <div class="content-wrapper">
+    <div class="container-fluid">
+
+  <!--Start Dashboard Content-->
+
+	<div class="card mt-3">
+    
+    </div>
+ </div> 
+  <section>
+    <span>Daily</span>
+  <canvas id="myChart"></canvas>
+  
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [{{#each daily}}'{{_id}}',{{/each}}],
+      datasets: [{
+        label: '# of Votes',
+        data: [{{#each daily}}{{totalAmount}},{{/each}}],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+    <span>Monthly</span>
+  <canvas id="myChart2"></canvas>
+  
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ct = document.getElementById('myChart2');
+
+  new Chart(ct, {
+    type: 'bar',
+    data: {
+      labels: [{{#each monthly}}'{{_id}}',{{/each}}],
+      datasets: [{
+        label: '# of Votes',
+        data: [{{#each monthly}}{{totalAmount}},{{/each}}],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+<span>Yearly</span>
+  <canvas id="myChart3"></canvas>
+  
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctc = document.getElementById('myChart3');
+
+  new Chart(ctc, {
+    type: 'bar',
+    data: {
+      labels: [{{#each yearly}}'{{_id}}',{{/each}}],
+      datasets: [{
+        label: '# of Votes',
+        data: [{{#each yearly}}{{totalAmount}},{{/each}}],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+  </section>
+    
+<section>
+  <div class="p-3">
+      <button class="btn btn-danger" onclick="generatePDF()">Download Invoice</button>
+  </div>
+  <div class="container">
+    <div class="row">
+  <div class="col-12 col-lg-12">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush table-borderless" id="invoice">
+          <thead style="color: black;">
+            <tr>
+              <th>No</th>
+              <th>Date</th>
+              <th>Total Amount</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody style="color: black;">
+            {{#each daily}}
+            <tr>
+              <td>{{math @index "+"1}}</td>
+          
+              <td>{{this._id}}</td>
+              <td>{{this.totalAmount}}</td>
+              <td>{{this.count}}</td>
+              </div>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+<script>
+  function generatePDF() {
+        const element = document.getElementById('invoice');
+		element.style.width = '700px';
+		element.style.height = '900px';
+		let opt = {
+			margin: 10,
+			filename: 'loyalpaws.pdf',
+			image:{type:'jpeg',quality:0.98},
+			html2canvas :{scale:1},
+			jsPDF:{unit:'mm',orientation:'landscape'}
+		}
+        html2pdf().set(opt)
+            .from(element)
+            .save();
+           }
+</script>
+
+
+	  
+	
+	<div class="row">
+	</div><!--End Row-->
+
+      <!--End Dashboard Content-->
+	  
+	<!--start overlay-->
+		  <div class="overlay toggle-menu"></div>
+		<!--end overlay-->
+		
+    </div>
+    <!-- End container-fluid-->
+    
+    </div><!--End content-wrapper-->
+   <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+	
+	
+</body>

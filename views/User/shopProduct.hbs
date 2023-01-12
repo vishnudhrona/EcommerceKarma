@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row" style="padding-top: 150px;">
+        {{#each products}}
+        <div class="col-lg-3 col-md-6">
+            <div class="single-product">
+                <a href="/singleproduct?id={{this._id}}"><img class="img-fluid" src="productImage/{{this.image1}}"
+                        alt=""></a>
+                <div class="product-details">
+                    <h6>{{this.name}}</h6>
+                    <div class="price">
+                        <h6 style="color: greenyellow;">Offer price : <span
+                                style="color: black;">{{this.offerprice}}</span>
+                        </h6>
+                        <h6 class="l-through">{{this.price}}</h6>
+                    </div>
+                    <div class="prd-bottom">
+                        {{!--
+                        <a href="" class="social-info" onclick="addToCart('{{this._id}}')">
+                            <span class="ti-bag"></span>
+                            <p class="hover-text">add to bag</p>
+                        </a> --}}
+                        {{!-- <a class="social-info ti-bag hover-text lnr ti-bag"
+                            onclick="addToCart('{{this._id}}')">add to
+                            bag</a> --}}
+                        <a class="social-info">
+                            <span class="lnr ti-bag" onclick="addToCart('{{this._id}}')"></span>
+                            <p class="hover-text">add to bag</p>
+
+                        </a>
+                        <a href="" class="social-info">
+                            <span class="lnr lnr-heart"></span>
+                            <p class="hover-text">Wishlist</p>
+
+                        </a>
+                        <a href="" class="social-info">
+                            <span class="lnr lnr-move"></span>
+                            <p class="hover-text">view more</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each }}
+    </div>
+</div>
+
+<div class="product__pagination mt-5">
+            {{#each pageCount}}
+            <button class="btn btn-secondary rounded"><a href="/shopproduct?id={{this}}" class="text-white">{{this}}</a></button>    
+						{{/each}}
+						  {{!-- {{#unless (next to last page)}} --}}
+            <a href="#"><i class="fa-sharp fa-solid fa-circle-chevron-right text-muted" ></i></a>
+						     {{!-- {{/unless}} --}}
+          </div>

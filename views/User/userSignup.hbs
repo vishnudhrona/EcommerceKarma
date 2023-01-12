@@ -1,0 +1,56 @@
+
+
+	<!--================Login Box Area =================-->
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="login_box_img">
+						<img class="img-fluid" src="UserStyle/img/login.jpg" alt="">
+						<div class="hover">
+							<h4>New to our website?</h4>
+							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+							<a class="primary-btn" href="registration.html">Create an Account</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="login_form_inner">
+						<h3>Sign Up</h3>
+						<form class="row login_form" action="/usersignup" method="post" id="submitId">
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="contactName" name="name" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" onkeyup="validateNmae()">
+								<span class="text-danger" id="fname-error"></span>
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="contactEmail" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" onkeyup="validateEmail()">
+								<span class="text-danger" id="email-error"></span>
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="" name="number" placeholder="Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" onkeyup="validateEmail()">
+								<span class="text-danger" id=""></span>
+							</div>
+                            <div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="contactPassword" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" onkeyup="validatePassword()">
+								<span class="text-danger" id="password-error"></span>
+							</div>
+							<div class="col-md-12 form-group">
+								
+							</div>
+							<div class="col-md-12 form-group">
+								<button type="submit" value="submit" class="primary-btn" onclick="return validateSignup()">Join Us</button>
+								<span class="text-danger" id="submit-error"></span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+	
+</body>
+<script src="javascript/validation.js"></script>
+
+</html>

@@ -1,0 +1,134 @@
+<div class="clearfix"></div>
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="row ">
+      <!--  modal  -->
+      <button type="submit" class="btn btn-primary ml-auto mr-5" data-toggle="modal" data-target="#exampleModal"
+        data-whatever="@getbootstrap">Add Coupon</button>
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="background-color:rgb(46, 46, 102);">
+              <form action="/admin/addcoupon" method="post">
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label text-dark">Coupon Name</label>
+                  <input type="text" name="couponName" class="form-control border border-dark" id="contactName" required>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label text-dark">Coupon Code</label>
+                  <input type="text" name="couponcode" class="form-control border border-dark" id="recipient-name" required>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label text-dark">Minimum Amount</label>
+                  <input type="number" name="minimumAmount" class="form-control border border-dark" id="recipient-name" required>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label text-dark">Maximum Amount</label>
+                  <input type="number" name="maximumAmount" class="form-control border border-dark" id="recipient-name" required>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label text-dark">Expire Date</label>
+                  <input type="date" name="expireDate" class="form-control border border-dark" id="recipient-name" required>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label text-dark">Coupon Percentage</label>
+                  <input type="number" name="couponPercentage" class="form-control border border-dark" id="percentage" onkeyup="validatePercentage()">
+              <span id="submit-error" class="text-danger"></span>
+                </div>
+                <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" id="percentagesubmit" class="btn btn-primary" onclick="return validateForm()">Add Coupon</button>
+            </div>
+                
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <!-- End modal  -->
+      <div class="col-md-12 p-3">
+        <div class="card ">
+          <div class="card-body">
+            <h5 class="card-title">Product details</h5>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Coupon Name</th>
+                    <th scope="col">Coupon Code</th>
+                    <th scope="col">Minimum Amount</th>
+                    <th scope="col">Maximum Amount</th>
+                    <th scope="col">Expire Date</th>
+                    <th scope="col">Coupon Percentage</th>
+                    <th scope="col">Activities</th>
+                  </tr>
+                </thead>
+                {{#each coupon}}
+                <tbody>
+                  <tr>
+                    <th scope="row">{{math @index "+"1}}</th>
+                    <td>{{this.couponName}}</td>
+                    <td>{{this.couponcode}}</td>
+                    <td>{{this.minimumAmount}}</td>
+                    <td>{{this.maximumAmount}}</td>
+                    <td>{{this.expireDate}}</td>
+                    <td>{{this.couponPercentage}}</td>
+                    <td>
+                      <a href="/admin/editproduct?id={{this._id}}" class="btn btn-primary">Edit</a>
+                      <a href="/admin/deleteproduct/{{this._id}}" class="btn btn-danger">Delete</a>
+                    </td>
+                  </tr>
+                </tbody>
+                {{/each}}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!--start overlay-->
+      <div class="overlay toggle-menu"></div>
+      <!--end overlay-->
+
+    </div>
+    <!-- End container-fluid-->
+
+  </div><!--End content-wrapper-->
+  <!--Start Back To Top Button-->
+  <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+  <!--End Back To Top Button-->
+
+  <div class="product__pagination mt-5">
+            {{#each pageCount}}
+            <a href="/admin/couponmanagement?id={{this}}" class="text-white"> <button class="btn btn-secondary rounded">{{this}}</button></a>    
+						{{/each}}
+						  {{!-- {{#unless (next to last page)}} --}}
+            <a href="#"><i class="fa-sharp fa-solid fa-circle-chevron-right text-muted" ></i></a>
+						     {{!-- {{/unless}} --}}
+          </div>
+
+          <script>
+            function validatePercentage(){
+              let percentage = document.getElementById('percentage').value
+              if(percentage>80){
+                document.getElementById('submit-error').innerHTML="Percentage cannot exceed 80%";
+                document.querySelector('#percentagesubmit').disabled = true;
+              }else{
+                document.getElementById('submit-error').innerHTML="";
+                document.querySelector('#percentagesubmit').disabled = false;
+              }
+            }
+          </script>
+
+          
