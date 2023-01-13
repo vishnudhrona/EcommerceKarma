@@ -37,7 +37,7 @@ router.get('/addproduct',adminController.addProduct)
 
 router.post('/addproduct',uploadMultiple,adminController.addProductPost)
 
-router.get('/deleteproduct/:id',adminController.deleteProduct)
+router.delete('/deleteproduct/:id',adminController.deleteProduct)
 
 router.get('/editproduct',adminController.editProduct)
 

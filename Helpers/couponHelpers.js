@@ -3,59 +3,59 @@ var collection = require('../Config/collection')
 var objectId = require('mongodb').ObjectId
 
 module.exports = {
-    applyCoupon:(couponData,userId,date,totalAmount,logIn)=>{
-        return new Promise(async(resolve, reject)=>{
+    applyCoupon: (couponData, userId, date, totalAmount, logIn) => {
+        return new Promise(async (resolve, reject) => {
             let response = {}
-            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({couponcode:couponData.couponCode})
-           console.log(coupon,'ccccccccccvvvvvvvvvvvvvvdddddddddddd');
-            if(coupon){
+            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponcode: couponData.couponCode })
+            console.log(coupon, 'ccccccccccvvvvvvvvvvvvvvdddddddddddd');
+            if (coupon) {
                 const expDate = new Date(coupon.expireDate)
-                console.log(date,'jjjjjjjjjjjjuuuuuuuuuu');
+                console.log(date, 'jjjjjjjjjjjjuuuuuuuuuu');
                 response.couponData = coupon
-                    if(date <= expDate){
-                        console.log(expDate,'///////////////////');
-                        response.dateValid = true;
-                        console.log(response,'uuuuuuuuuuuuutttttttttttt');
+                if (date <= expDate) {
+                    console.log(expDate, '///////////////////');
+                    response.dateValid = true;
+                    console.log(response, 'uuuuuuuuuuuuutttttttttttt');
+                    resolve(response)
+
+                    let total = totalAmount
+                    if (total >= coupon.minimumAmount) {
+                        response.verifyMinimumAmount = true;
                         resolve(response)
 
-                         let total = totalAmount
-                        if(total >= coupon.minimumAmount){
-                            response.verifyMinimumAmount = true;
+                        if (total <= coupon.maximumAmount) {
+                            response.verifyMaximumAmount = true;
                             resolve(response)
-
-                            if(total <= coupon.maximumAmount){
-                                response.verifyMaximumAmount = true;
-                                resolve(response)
-                            } else {
-                                response.maximumAmountMsg = "Your Maximum Purchase should be" + coupon.maximumAmount;
-                                response.maximumAmount = true;
-                                resolve(response)
-                            }
                         } else {
-                            response.minimumAmountMsg = "Your Minimum purchase should be" + coupon.minimumAmount;
-                            response.minimumAmount = true;
+                            response.maximumAmountMsg = "Your Maximum Purchase should be" + coupon.maximumAmount;
+                            response.maximumAmount = true;
                             resolve(response)
                         }
                     } else {
-                        response.invalidDateMsg = 'Coupon Expired'
-                        response.invalidDate = true
-                        response.Coupenused = false
+                        response.minimumAmountMsg = "Your Minimum purchase should be" + coupon.minimumAmount;
+                        response.minimumAmount = true;
                         resolve(response)
-                        console.log('invalid date');
                     }
-                
-                    
+                } else {
+                    response.invalidDateMsg = 'Coupon Expired'
+                    response.invalidDate = true
+                    response.Coupenused = false
+                    resolve(response)
+                    console.log('invalid date');
+                }
+
+
             } else {
                 response.invalidCoupon = true;
                 response.invalidCouponMsg = "Invalid Coupon";
-                console.log(response.invalidCouponMsg,'ffffffffffbbbbbbbbbnnnnnnnnnnn');
+                console.log(response.invalidCouponMsg, 'ffffffffffbbbbbbbbbnnnnnnnnnnn');
                 resolve(response)
             }
 
-            if(response.dateValid && response.verifyMaximumAmount && response.verifyMinimumAmount){
+            if (response.dateValid && response.verifyMaximumAmount && response.verifyMinimumAmount) {
                 response.verify = true;
             }
         })
-        
+
     }
 }
