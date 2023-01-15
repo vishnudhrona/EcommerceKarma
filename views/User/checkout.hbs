@@ -1,15 +1,7 @@
 <!--================Checkout Area =================-->
 <section class="checkout_area section_gap">
     <div class="container" style="padding-top: 80px;">
-        <form action="" method="post">
-            <div class="cupon_area">
-                <div class="check_title">
-                    <h2>Have a coupon? <a href="#">Click here to enter your code</a></h2>
-                </div>
-                <input type="text" name="coupon" id="couponCode" placeholder="Enter coupon code">
-                <button class="tp_btn" onclick="applyCoupon()">Apply Coupo</button>
-            </div>
-        </form>
+        
         {{#each address}}
         <div class="card">
             <div class="card-body">
@@ -90,7 +82,7 @@
                             <div class="radion_btn">
                                 <input type="radio" id="f-option6" name="paymentMethod" value="ONLINE">
                                 <label for="f-option6">Online Payment </label>
-                                <img src="img/product/card.jpg" alt="">
+                                <img src="img/product/c" alt="">
                                 <div class="check"></div>
                             </div>
                             <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal

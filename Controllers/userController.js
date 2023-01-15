@@ -7,32 +7,55 @@ const couponHelpers = require('../Helpers/couponHelpers')
 
 
 let userHome = async (req, res) => {
-    let status = {}
-    let logIn = req.session.user
-    req.session.returnTo = req.originalUrl;
-    let cartCount = null
-    if (req.session.user) {
-        cartCount = await userHelpers.getCartCount(req.session.user._id)
+    try {
+        let status = {};
+        let logIn = req.session.user;
+        req.session.returnTo = req.originalUrl;
+        let cartCount = null;
+        if (req.session.user) {
+            try {
+                cartCount = await userHelpers.getCartCount(req.session.user._id);
+            } catch (error) {
+                console.log("Error: ", error);
+                res.status(500).render("user/error", { message: "Something went wrong" });
+            }
+        }
+        let wishCount = null;
+        if (req.session.user) {
+            try {
+                wishCount = await userHelpers.getWishCount(req.session.user._id);
+            } catch (error) {
+                console.log("Error: ", error);
+                res.status(500).render("user/error", { message: "Something went wrong" });
+            }
+        }
+        let products = await productHelpers.getAllProducts();
+        let banner = await adminHelpers.getAllBanner();
+
+        res.render("user/home", {
+            products,
+            logIn,
+            cartCount,
+            banner,
+            wishCount,
+        });
+    } catch (error) {
+        console.log("Error: ", error);
+        res.status(500).render("user/error", { message: "Something went wrong" });
     }
-    let wishCount = null
-    if (req.session.user) {
-        wishCount = await userHelpers.getWishCount(req.session.user._id)
-    }
-   let products = await productHelpers.getAllProducts()
-   let banner = await adminHelpers.getAllBanner()
-
-        res.render('user/home', { products, logIn, cartCount, banner, wishCount })
-    
-
-
-
-}
+};
 
 /* ---------------------------------------  User Signup  --------------------------------------------------*/
 let userSignup = async (req, res) => {
-    let banner = await adminHelpers.getAllBanner()
-    res.render('user/userSignup',{banner})
-}
+    try {
+        let banner = await adminHelpers.getAllBanner();
+        res.render("user/userSignup", { banner });
+    } catch (error) {
+        console.log("Error: ", error);
+        res.status(500).render("user/error", { message: "Something went wrong" });
+    }
+};
+
 /* ---------------------------------------post method User Signup------------------------------------------*/
 let userSignupPost = (req, res) => {
     userHelpers.doSignup(req.body).then((response) => {
@@ -79,7 +102,8 @@ let userLogout = (req, res) => {
 
 /* ---------------------------------------Single Product View Page-----------------------------------------*/
 let singleProduct = async (req, res) => {
-    let logIn = req.session.user
+    try{
+        let logIn = req.session.user
     req.session.returnTo = req.originalUrl;
     let userId = req.session.user._id
     productId = req.query.id
@@ -92,6 +116,10 @@ let singleProduct = async (req, res) => {
     await productHelpers.getProductDeatails(productId).then((response) => {
         res.render("user/singleProductView", { response, logIn, userId, banner, cartCount, products })
     })
+    }catch(error){
+        console.log("Error: ", error);
+        res.status(500).render("user/error", { message: "Something went wrong" });
+    }
 }
 /* ---------------------------------------End Single Product View Page-------------------------------------*/
 
@@ -100,9 +128,14 @@ let cartView = async (req, res) => {
     let logIn = req.session.user
     let userId = req.session.user._id
     let products = await userHelpers.getAllCartProducts(userId)
+    if(!products){
+        res.render('user/cartEmpty')
+    }
     let total =  await userHelpers.getTotalAmount(req.session.user._id)
+    if(!total){
+        res.render('user/cartEmpty')
+    }
     let banner = await adminHelpers.getAllBanner()
-    console.log(products,'nnnnnnnnnnnnnnnnnnoooooooooooo');
     res.render('user/cart', { logIn, products,total,user:req.session.user._id, banner })
 }
 
@@ -146,13 +179,11 @@ let placeCheckoutPost = async (req, res)=>{
     }else{
        var totalPrice = await userHelpers.getTotalAmount(req.session.user._id)
     }
-    console.log(totalPrice,'ooooooooo6666666666');
     userHelpers.checkoutOrder(req.body,products,totalPrice).then((response)=>{
         req.session.orderId = response
        if(req.body['paymentMethod'] ==='COD'){
         products.forEach(element =>{
            userHelpers.decrementStock(element)
-           console.log(element,'mmmmmmmmmmwwwwwwwwwwww')
         })
             res.json({codSuccess:true})
         }else if(req.body['paymentMethod']==='ONLINE'){
@@ -184,11 +215,17 @@ let orderSucess = async(req, res)=>{
 }
 
 let myOrder = async(req, res)=>{
-    let logIn = req.session.user
-    let userId = req.session.user._id
-    let orders = await userHelpers.getAllOrders(userId)
-    console.log(orders,'uuuuuuuuuuuooooo');
-        res.render('user/myOrder',{logIn, orders })
+    try{
+        let logIn = req.session.user
+        let userId = req.session.user._id
+        let orders = await userHelpers.getAllOrders(userId)
+            res.render('user/myOrder',{logIn, orders })
+    }catch(error){
+        let logIn = req.session.user
+        console.log("Error: ", error);
+        res.status(500).render("user/error",{ message: "please login or signup",logIn});
+    }
+    
 }
 
 let verifyPayment = (req, res)=>{
@@ -241,10 +278,16 @@ let otpConfirmPost = (req, res) => {
 
 /* ---------------------------------------User Profile-----------------------------------------------------*/
 let UserProfile = async (req, res) => {
-    let logIn = req.session.user
-    let address = await userHelpers.getAllAddress(req.session.user._id)
-    let banner = await adminHelpers.getAllBanner()
-    res.render('user/userProfile', { banner, logIn, address })
+    try{
+        let logIn = req.session.user
+        let address = await userHelpers.getAllAddress(req.session.user._id)
+        let banner = await adminHelpers.getAllBanner()
+        res.render('user/userProfile', { banner, logIn, address })
+    }catch(error){
+         console.log("Error: ", error);
+        res.status(500).render("user/error",{ message: "please login or signup"});
+    }
+   
 }
 /* ---------------------------------------End User Profile-------------------------------------------------*/
 

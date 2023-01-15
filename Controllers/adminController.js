@@ -112,16 +112,12 @@ let editProduct = async (req, res) => {
     let productId = req.query.id
     let products = await productHelpers.getProductDeatails(productId)
     let category = await categoryHelpers.getAllCategory()
-
     res.render('admin/editProduct', { layout: 'adminLayout', products, category })
-
-
 }
 
 let editProductPost = async (req, res) => {
     req.body.price = parseInt(req.body.price)
     let proId = req.query.id
-    console.log(proId, 'kkkkkkkkooooo');
     let proBody = req.body
     if (req.files.image1 == null) {
         Image1 = await productHelpers.fetchImage1(proId)

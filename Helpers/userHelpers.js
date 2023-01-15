@@ -5,7 +5,6 @@ const validatePhoneNumber = require('validate-phone-number-node-js');
 var objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay');
 require('dotenv').config()
-console.log(process.env.accountSID,"----sid---",process.env.authToken);
 const Client = require('twilio')(process.env.accountSID,process.env.authToken)
 
 
@@ -214,52 +213,57 @@ module.exports = {
         })
     },
     getTotalAmount:(userId)=>{
-        return new Promise(async(resolve, reject)=>{
-            let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
-             {
-                 $match:{user:objectId(userId)}
-             },
-             {
-                 $unwind:'$products'
-             },
-             {
-                 $project:{
-                     item:'$products.item',
-                     quantity:'$products.quantity'
+        try{
+            return new Promise(async(resolve, reject)=>{
+                let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                 {
+                     $match:{user:objectId(userId)}
+                 },
+                 {
+                     $unwind:'$products'
+                 },
+                 {
+                     $project:{
+                         item:'$products.item',
+                         quantity:'$products.quantity'
+                     }
+                 },
+                 {
+                     $lookup:{
+                         from:collection.PRODUCT_COLLECTION,
+                         localField:'item',
+                         foreignField:'_id',
+                         as:'product'
+                     }
+                 },
+                 {
+                     $project:{
+                         item:1,
+                         quantity:1,
+                         product:{$arrayElemAt:['$product',0]}
+                     }
+                 },
+                 {
+                    $group:{
+                        _id:null,
+                        total:{$sum:{$multiply:['$quantity','$product.offerprice']}}
+                    }
                  }
-             },
-             {
-                 $lookup:{
-                     from:collection.PRODUCT_COLLECTION,
-                     localField:'item',
-                     foreignField:'_id',
-                     as:'product'
-                 }
-             },
-             {
-                 $project:{
-                     item:1,
-                     quantity:1,
-                     product:{$arrayElemAt:['$product',0]}
-                 }
-             },
-             {
-                $group:{
-                    _id:null,
-                    total:{$sum:{$multiply:['$quantity','$product.offerprice']}}
-                }
-             }
-
-            ]).toArray()
-            resolve(total[0].total)
-         
-     })
+    
+                ]).toArray()
+                    resolve(total[0].total)
+         })
+        }catch(error){
+            console.log("Error: ", error);
+        res.status(500).render("user/cartEmpty",{ message: "please login or signup"});
+        }
+        
         
     },
     getCartProductList:(userId)=>{
         return new Promise(async(resolve, reject)=>{
            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)})
-           resolve(cart?.products)
+           resolve(cart.products)
         })
     },
     checkoutOrder:(order,products,total)=>{
@@ -570,10 +574,9 @@ module.exports = {
       getTenProducts: (Pageno) => {
         return new Promise(async (resolve, reject) => {
             let val = (Pageno - 1) * 6
-            let AllProducts_ = await db.get().collection(collection.PRODUCT_COLLECTION)
+            let AllProducts = await db.get().collection(collection.PRODUCT_COLLECTION)
                 .find().sort({ _id: -1 }).skip(val).limit(6).toArray()
-    
-            resolve(AllProducts_)
+            resolve(AllProducts)
         })
     },
     addToWishlist:(userId,productId)=>{
@@ -645,8 +648,6 @@ module.exports = {
         })
     },
     decrementStock:(data)=>{
-        console.log(data.item,'wewwwwwwwwweeeeeeeeeeee');
-        console.log(data.quantity,'6666666667777777777');
         return new Promise(async(resolve,reject)=>{
             try{
                stock = await db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:data.item},
@@ -665,7 +666,6 @@ module.exports = {
         })
     },
     stockIncrement:(proId)=>{
-        console.log(proId,'xxxxxxxxxxxvvvvvvvvvvvvvv');
         return new Promise((resolve,reject)=>{
             db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(proId)},
                 {
