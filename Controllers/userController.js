@@ -265,6 +265,7 @@ let otpConfirm = async (req, res)=>{
 
 let otpConfirmPost = (req, res) => {
     userHelpers.otpConfirm(req.body, otpSignData).then((response) => {
+        console.log(otpSignData,'nnnnnnnnnbbbbbbbbbb');
         if (response.status) {
             req.session.loggedIn = true;
             req.session.user = otpSignData
@@ -293,6 +294,7 @@ let UserProfile = async (req, res) => {
 
 let addAddress = async (req, res)=>{
     let logIn = req.session.user
+    console.log(logIn,'ggggggggggggggggg');
     let banner = await adminHelpers.getAllBanner()
     res.render('user/addAddress', { banner,logIn })
 }

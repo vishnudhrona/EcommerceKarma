@@ -1,0 +1,83 @@
+<body>
+
+
+  <div class="clearfix"></div>
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">Edit Coupon</div>
+              <hr>
+              <form action="/admin/editCoupon?id={{couponDetails._id}}" method="post">
+              {{!-- {{#each couponDetails}} --}}
+                <div class="form-group">
+                  <label for="input-1">Name</label>
+                  <input type="text" name="couponName" value="{{couponDetails.couponName}}" class="form-control" id="input-1"
+                    placeholder="Enter couponName Name">
+                </div>
+                <div class="form-group">
+                  <label for="input-3">Price</label>
+                  <input type="text" name="couponcode" value="{{couponDetails.couponcode}}" class="form-control" id="input-3"
+                    placeholder="Enter couponcode Price">
+                </div>
+                <div class="form-group">
+                  <label for="input-3">Offer Price</label>
+                  <input type="text" name="minimumAmount" value="{{couponDetails.minimumAmount}}" class="form-control" id="input-3"
+                    placeholder="Enter minimumAmount Price">
+                </div>
+                <div class="form-group">
+                  <label for="input-4">Description</label>
+                  <input type="text" name="maximumAmount" value="{{couponDetails.maximumAmount}}" class="form-control"
+                    id="input-4" placeholder="Enter maximumAmount">
+                </div>
+                <div class="form-group">
+                  <label for="input-4">Description</label>
+                  <input type="text" name="expireDate" value="{{couponDetails.expireDate}}" class="form-control"
+                    id="input-4" placeholder="Enter expireDate Description">
+                </div>
+                <div class="form-group">
+                  <label for="input-4">Description</label>
+                  <input type="text" name="couponPercentage" value="{{couponDetails.couponPercentage}}" class="form-control"
+                    id="input-4" placeholder="Enter couponPercentage">
+                </div>
+                {{!-- {{/each}} --}}
+                {{!-- <div class="form-group py-2">
+                  <div class="icheck-material-white">
+                    <input type="checkbox" id="user-checkbox1" checked="" />
+                    <label for="user-checkbox1">I Agree Terms & Conditions</label>
+                  </div>
+                </div> --}}
+                <div class="form-group">
+                  <button type="submit" class="btn btn-light px-5"><i class="icon-lock"></i>Update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!--End Row-->
+
+        <!--start overlay-->
+        <div class="overlay toggle-menu"></div>
+        <!--end overlay-->
+
+      </div>
+      <!-- End container-fluid-->
+
+    </div>
+    <!--End content-wrapper-->
+    <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+
+    </section>
+
+    <script>
+      function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+      }
+    </script>

@@ -5,7 +5,9 @@ const validatePhoneNumber = require('validate-phone-number-node-js');
 var objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay');
 require('dotenv').config()
-const Client = require('twilio')(process.env.accountSID,process.env.authToken)
+const OTP = require('../Config/OTP') 
+const Client = require('twilio')(OTP.accountSID,OTP.authToken)
+
 
 
 const uuid = require("uuid");
@@ -288,7 +290,7 @@ module.exports = {
                 date:new Date()
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response=>{
-                //db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)})
+                db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)})
                 resolve(response.insertedId)
             }))
         })
@@ -436,7 +438,7 @@ module.exports = {
             otpDetails.number=parseInt(otpDetails.number)
             response.status = true
             response.user = user
-            Client.verify.services(process.env.serviceSID)
+            Client.verify.services(OTP.serviceSID)
             .verifications
             .create({ to: `+91${otpDetails.number}`, channel: 'sms' })
             .then((verifications) => {
@@ -452,7 +454,7 @@ module.exports = {
     },
     otpConfirm:(otp,userData)=>{
         return new Promise((resolve, reject)=>{
-            Client.verify.services(process.env.serviceSID)
+            Client.verify.services(OTP.serviceSID)
                 .verificationChecks
                 .create({
                     to: `+91${userData.number}`,
@@ -482,7 +484,6 @@ module.exports = {
         })
     },
     cancelOrder: (proId) => {
-        console.log(proId,'qqqqqqqqqttttttttttttt');
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).
                 updateOne({ _id: objectId(proId) }, {
@@ -523,7 +524,7 @@ module.exports = {
                 registerednumber.number = parseInt(registerednumber.number)
                 response.status = true
                 response.registerednumber = registerednumber
-                Client.verify.services(process.env.serviceSID)
+                Client.verify.services(OTP.serviceSID)
                     .verifications
                     .create({ to: `+91${registerednumber.number}`, channel: 'sms' })
                     .then((verifications) => {
@@ -546,7 +547,7 @@ module.exports = {
                         password: passDetails.newpassword
                     }
                 })
-            Client.verify.services(process.env.serviceSID)
+            Client.verify.services(OTP.serviceSID)
                 .verificationChecks
                 .create({
                     to: `+91${userNumber}`,

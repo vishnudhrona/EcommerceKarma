@@ -8,8 +8,8 @@ module.exports = {
     addBanner:(banner)=>{
         banner.blockstatus = true;
         return new Promise((resolve, reject)=>{
-            db.get().collection(collection.BANNER_COLLECTION).insertOne(banner).then((response)=>{
-                resolve(response.insertedId)
+            db.get().collection(collection.BANNER_COLLECTION).insertOne(banner).then((data)=>{
+                resolve(data)
             })
         })
     },

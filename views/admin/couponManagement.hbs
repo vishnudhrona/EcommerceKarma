@@ -20,37 +20,44 @@
               <form action="/admin/addcoupon" method="post">
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label text-dark">Coupon Name</label>
-                  <input type="text" name="couponName" class="form-control border border-dark" id="contactName" required>
+                  <input type="text" name="couponName" class="form-control border border-dark" id="contactName"
+                    required>
                 </div>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label text-dark">Coupon Code</label>
-                  <input type="text" name="couponcode" class="form-control border border-dark" id="recipient-name" required>
+                  <input type="text" name="couponcode" class="form-control border border-dark" id="recipient-name"
+                    required>
                 </div>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label text-dark">Minimum Amount</label>
-                  <input type="number" name="minimumAmount" class="form-control border border-dark" id="recipient-name" required>
+                  <input type="number" name="minimumAmount" class="form-control border border-dark" id="recipient-name"
+                    required>
                 </div>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label text-dark">Maximum Amount</label>
-                  <input type="number" name="maximumAmount" class="form-control border border-dark" id="recipient-name" required>
+                  <input type="number" name="maximumAmount" class="form-control border border-dark" id="recipient-name"
+                    required>
                 </div>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label text-dark">Expire Date</label>
-                  <input type="date" name="expireDate" class="form-control border border-dark" id="recipient-name" required>
+                  <input type="date" name="expireDate" class="form-control border border-dark" id="recipient-name"
+                    required>
                 </div>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label text-dark">Coupon Percentage</label>
-                  <input type="number" name="couponPercentage" class="form-control border border-dark" id="percentage" onkeyup="validatePercentage()">
-              <span id="submit-error" class="text-danger"></span>
+                  <input type="number" name="couponPercentage" class="form-control border border-dark" id="percentage"
+                    onkeyup="validatePercentage()">
+                  <span id="submit-error" class="text-danger"></span>
                 </div>
                 <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" id="percentagesubmit" class="btn btn-primary" onclick="return validateForm()">Add Coupon</button>
-            </div>
-                
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" id="percentagesubmit" class="btn btn-primary"
+                    onclick="return validateForm()">Add Coupon</button>
+                </div>
+
               </form>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -84,8 +91,8 @@
                     <td>{{this.expireDate}}</td>
                     <td>{{this.couponPercentage}}</td>
                     <td>
-                      <a href="/admin/editproduct?id={{this._id}}" class="btn btn-primary">Edit</a>
-                      <a href="/admin/deleteproduct/{{this._id}}" class="btn btn-danger">Delete</a>
+                      <a href="/admin/editCoupon?id={{this._id}}" class="btn btn-primary">Edit</a>
+                      <a href="/admin/deleteCoupon?id={{this._id}}" class="btn btn-danger">Delete</a>
                     </td>
                   </tr>
                 </tbody>
@@ -110,25 +117,24 @@
   <!--End Back To Top Button-->
 
   <div class="product__pagination mt-5">
-            {{#each pageCount}}
-            <a href="/admin/couponmanagement?id={{this}}" class="text-white"> <button class="btn btn-secondary rounded">{{this}}</button></a>    
-						{{/each}}
-						  {{!-- {{#unless (next to last page)}} --}}
-            <a href="#"><i class="fa-sharp fa-solid fa-circle-chevron-right text-muted" ></i></a>
-						     {{!-- {{/unless}} --}}
-          </div>
+    {{#each pageCount}}
+    <a href="/admin/couponmanagement?id={{this}}" class="text-white"> <button
+        class="btn btn-secondary rounded">{{this}}</button></a>
+    {{/each}}
+    {{!-- {{#unless (next to last page)}} --}}
+    <a href="#"><i class="fa-sharp fa-solid fa-circle-chevron-right text-muted"></i></a>
+    {{!-- {{/unless}} --}}
+  </div>
 
-          <script>
-            function validatePercentage(){
-              let percentage = document.getElementById('percentage').value
-              if(percentage>80){
-                document.getElementById('submit-error').innerHTML="Percentage cannot exceed 80%";
-                document.querySelector('#percentagesubmit').disabled = true;
-              }else{
-                document.getElementById('submit-error').innerHTML="";
-                document.querySelector('#percentagesubmit').disabled = false;
-              }
-            }
-          </script>
-
-          
+  <script>
+    function validatePercentage() {
+      let percentage = document.getElementById('percentage').value
+      if (percentage > 80) {
+        document.getElementById('submit-error').innerHTML = "Percentage cannot exceed 80%";
+        document.querySelector('#percentagesubmit').disabled = true;
+      } else {
+        document.getElementById('submit-error').innerHTML = "";
+        document.querySelector('#percentagesubmit').disabled = false;
+      }
+    }
+  </script>

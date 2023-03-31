@@ -109,8 +109,12 @@
                       <th scope="row">{{math @index "+"1}}</th>
                       <td>{{this.seasonName}}</td>
                       <td>{{this.description}}</td>
-                      <td><img style="height: 50px; width: 50px;" src='/bannerImage/{{this._id}}.png' alt=""></td>
+                      <td><img style="height: 50px; width: 50px;" src='/banner-images/{{this.Image}}' alt=""></td>
                       <td>
+
+
+
+                        {{!-- '/productImage/{{this.image1}}' --}}
                         {{#if blockstatus}}
                         <a href="" class="btn btn-success">On screen</a>
                         {{else}}

@@ -4,10 +4,12 @@ var router = express.Router();
 var adminController = require('../Controllers/adminController')
 var productHelpers = require('../Helpers/productHelpers')
 var adminHelpers = require('../Helpers/adminHelpers')
-var multer = require('multer')
+var multer = require('multer');
+const saveImage = require('../middleware/multer');
 
 const multerStorage = multer.diskStorage({
     destination: function (req, file, cb) {
+      console.log('i am innnnnnnnnnnnnnnnnnnn');
       cb(null, "./public/productImage");
     },
     filename: function (req, file, cb) {
@@ -16,6 +18,19 @@ const multerStorage = multer.diskStorage({
   })
   const uploadMultiple = multer({ storage: multerStorage }).fields([{ name: 'image1', maxCount: 1 },
    { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }, { name: 'image4', maxCount: 1 }])
+
+  //uploads banner img
+  const multerStorageBanner = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "./public/banner-images");
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + '-' + file.originalname)
+    }
+  })
+  // const uploadBanner = multer({ storage: multerStorageBanner });
+
+  const uploadSingleFile = multer({ storage: multerStorageBanner })
 
 
 /* ---------------------------------------Admin Login page--------------------------------------------------*/
@@ -37,14 +52,14 @@ router.get('/addproduct',adminController.addProduct)
 
 router.post('/addproduct',uploadMultiple,adminController.addProductPost)
 
-router.delete('/deleteproduct/:id',adminController.deleteProduct)
+router.get('/deleteproduct',adminController.deleteProduct)
 
 router.get('/editproduct',adminController.editProduct)
 
 router.post('/editproduct',uploadMultiple,adminController.editProductPost)
 /* ---------------------------------------End Admin Productmanagement------------------------------------------*/
 
-/* ---------------------------------------End Admin Categorymanagement------------------------------------------*/
+/* ---------------------------------------End Admin Categorymanagement-r-----------------------------------------*/
 router.get('/categorymanagement',adminController.categoryManagement)
 
 router.get('/addcategory',adminController.addCategory)
@@ -72,7 +87,7 @@ router.get('/bannermanagement',adminController.bannerManagement)
 
 router.get('/addbanner', adminController.addBanner)
 
-router.post('/addbanner',adminController.addBannerPost)
+router.post('/addbanner',saveImage,adminController.addBannerPost)
 
 router.get('/blockbanner',adminController.blockBanner)
 
@@ -96,6 +111,12 @@ router.get('/productcancel',adminController.productCancel)
 router.get('/couponmanagement',adminController.couponManagement)
 
 router.post('/addcoupon',adminController.addCoupon)
+
+router.get('/deleteCoupon', adminController.deleteCoupon)
+
+router.get('/editCoupon', adminController.editCouponGet)
+
+router.post('/editCoupon', adminController.editCouponPost)
 /* ---------------------------------------End Coupon Management-------------------------------------------*/
 
 

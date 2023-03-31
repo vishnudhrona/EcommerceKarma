@@ -1,5 +1,6 @@
 var db = require('../Config/connection')
 var collection = require('../Config/collection')
+const { resolve } = require('promise')
 var objectId = require('mongodb').ObjectId
 
 module.exports = {
@@ -57,5 +58,34 @@ module.exports = {
             }
         })
 
+    },
+    deleteCoupon: (couponId) =>{
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.COUPON_COLLECTION).deleteOne({_id : objectId(couponId)}).then((response) => {
+                console.log(response,'yyyyyyyyyyyyyyyyyyyyyyyyyy');
+                resolve(response)
+            })
+        })
+    }, 
+    editCouponGet: (couponId) => {
+        return new Promise(async(resolve, reject) => {
+            let couponDetails = await  db.get().collection(collection.COUPON_COLLECTION).findOne({_id : objectId(couponId)})
+                resolve(couponDetails)
+        })
+    },
+    editCouponPost: (couponBodyId, couponBody) => {
+        console.log(couponBodyId,'eeeeeeeeeeerrrrrrrrrrrrrrr');
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.COUPON_COLLECTION).updateOne({_id : objectId(couponBodyId)},{$set : {
+                couponName : couponBody.couponName,
+                couponcode : couponBody.couponcode,
+                minimumAmount : couponBody.minimumAmount,
+                maximumAmount : couponBody.maximumAmount,
+                expireDate : couponBody.expireDate,
+                couponPercentage : couponBody.couponPercentage
+            }}).then((response) => {
+                resolve(response)
+            })
+        })
     }
 }

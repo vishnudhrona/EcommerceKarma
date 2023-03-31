@@ -13,7 +13,7 @@ module.exports = {
             }catch(err){
                 let error = {}
                 error.message = 'Something went wrong'
-                reject(error)
+                reject(error)                                                
             }
         })
     },

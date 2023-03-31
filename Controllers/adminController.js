@@ -4,6 +4,10 @@ var productHelpers = require('../Helpers/productHelpers')
 var categoryHelpers = require('../Helpers/categoryHelpers')
 var userHelpers = require('../Helpers/userHelpers')
 var adminHelpers = require('../Helpers/adminHelpers')
+var couponHelpers = require('../Helpers/couponHelpers')
+const path = require('path');
+
+
 
 const credential = {
     email: 'vishnuvaliyaveetil92@gmail.com',
@@ -103,8 +107,8 @@ let addProductPost = async (req, res) => {
 }
 
 let deleteProduct = (req, res) => {
-    let productId = req.params.id
-    productHelpers.deleteProduct(productId).then((response) => { })
+    let proId = req.query.id
+    productHelpers.deleteProduct(proId).then((response) => { })
     res.redirect('/admin/productmanagement')
 }
 
@@ -162,6 +166,7 @@ let addCategory = (req, res) => {
 }
 
 let addCategoryPost = async (req, res) => {
+    console.log(req.body,'uuuuuuuuuuuuuuuuuuuuuuuu');
     req.body.categoryname = req.body.categoryname.toUpperCase()
     let category = await categoryHelpers.getACategory(req.body.categoryname)
     if (category) {
@@ -191,6 +196,7 @@ let editCategory = (req, res) => {
 
 let editCategorytPost = (req, res) => {
     let catId = req.query.id
+    console.log(catId,'yyyyyyyyyyyyyyyyyyyyyyyyyyyy');
     let catBody = req.body
     categoryHelpers.updateCategory(catId, catBody).then((response) => {
         res.redirect('/admin/categorymanagement')
@@ -254,16 +260,14 @@ let addBanner = (req, res) => {
 }
 
 let addBannerPost = (req, res) => {
-    adminHelpers.addBanner(req.body).then((proId) => {
-        let image = req.files.image
-        image.mv('./public/bannerImage/' + proId + '.png', (err, done) => {
-            if (!err) {
-                res.redirect('/admin/addbanner')
-            } else {
-                console.log(err);
-            }
-
-        })
+    // console.log(req.body,'jjjjjjjjjjjjjjjjjjjjj');
+    // req.body.image = req.files.image[0].filename
+    const filePath =path.basename(req.file.path);
+    
+    console.log(filePath,"+++++++++++++++++++++++++++++++++++");
+    req.body.Image=filePath
+    adminHelpers.addBanner(req.body).then((id) => {
+        res.redirect('/admin/bannermanagement')
     })
 }
 
@@ -366,6 +370,27 @@ let addCoupon = async (req, res) => {
     res.redirect('/admin/couponmanagement')
 
 }
+
+let deleteCoupon = (req, res) => {
+    let couponId = req.query.id
+    couponHelpers.deleteCoupon(couponId).then((response) => {
+        res.redirect('/admin/couponmanagement')
+    })
+}
+
+let editCouponGet = async(req, res) => {
+ let couponId = req.query.id
+ let couponDetails = await couponHelpers.editCouponGet(couponId)
+    res.render('admin/editCoupon', {layout: 'adminLayout', couponDetails})
+}
+
+let editCouponPost = (req, res) => {
+    let couponId = req.query.id
+    let couponBody = req.body
+    couponHelpers.editCouponPost(couponId, couponBody).then((response) => {
+        res.redirect('/admin/couponmanagement')
+    })
+}
 /* ---------------------------------------End Coupon management------------------------------------------------*/
 
 module.exports = {
@@ -400,4 +425,7 @@ module.exports = {
     productCancel,
     couponManagement,
     addCoupon,
+    deleteCoupon,
+    editCouponGet,
+    editCouponPost
 }
