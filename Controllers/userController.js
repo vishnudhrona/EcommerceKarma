@@ -1,3 +1,4 @@
+var env = require('dotenv').config();
 var express = require("express");
 var router = express.Router();
 const productHelpers = require("../Helpers/productHelpers");
@@ -128,7 +129,6 @@ let cartView = async (req, res) => {
     let logIn = req.session.user
     let userId = req.session.user._id
     let products = await userHelpers.getAllCartProducts(userId)
-    console.log(products,'yyyyyyyyyyyuuuuuuuuuuuuuuuuuuuuuuu');
     if(!products){
         let errorMessage = "Your Cart Is Empty"
     res.render('user/cart', { logIn, products, errorMessage})
@@ -272,7 +272,6 @@ let otpConfirm = async (req, res)=>{
 
 let otpConfirmPost = (req, res) => {
     userHelpers.otpConfirm(req.body, otpSignData).then((response) => {
-        console.log(otpSignData,'nnnnnnnnnbbbbbbbbbb');
         if (response.status) {
             req.session.loggedIn = true;
             req.session.user = otpSignData

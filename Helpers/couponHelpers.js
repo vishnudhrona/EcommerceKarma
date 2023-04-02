@@ -1,3 +1,4 @@
+var env = require('dotenv').config();
 var db = require('../Config/connection')
 var collection = require('../Config/collection')
 const { resolve } = require('promise')

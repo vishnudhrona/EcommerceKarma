@@ -1,3 +1,4 @@
+var env = require('dotenv').config();
 var express = require('express');
 var router = new express.Router();
 var productHelpers = require('../Helpers/productHelpers')

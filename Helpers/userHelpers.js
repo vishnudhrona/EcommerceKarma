@@ -1,20 +1,21 @@
 var db = require('../Config/connection')
+require('dotenv').config();
 var collection = require('../Config/collection')
 const bcrypt = require('bcrypt')
 const validatePhoneNumber = require('validate-phone-number-node-js');
 var objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay');
-require('dotenv').config()
+// require('dotenv').config()
 const OTP = require('../Config/OTP') 
-const Client = require('twilio')(OTP.accountSID,OTP.authToken)
-
-
+const Client = require('twilio')(process.env.accountSID,process.env.authToken)
 
 const uuid = require("uuid");
 
+
+
 var instance = new Razorpay({
-  key_id: 'rzp_test_gFSzKrbiJVMqDa',
-  key_secret: 'xyM3duBSdGj0LM5YfK4aCj5D',
+  key_id: process.env.key_id,
+  key_secret: process.env.key_secret,
 });
 
 
@@ -189,7 +190,6 @@ module.exports = {
         })
     },
     changeProductQuantity: (details) => {
-        console.log(details,'llllllllllpppppp');
         details.count = parseInt(details.count)
         details.quantity = parseInt(details.quantity)
 
@@ -269,9 +269,6 @@ module.exports = {
         })
     },
     checkoutOrder:(order,products,total)=>{
-        // console.log(order,'eeeeeetttttttttttyyyyyyyyyyyyyyyy');
-        // console.log(products,'eeeeeetttttttttttyyyyyyyyyyyyyyyy');
-        // console.log(total,'eeeeeetttttttttttyyyyyyyyyyyyyyyy');
         return new Promise((resolve, reject)=>{
             let status = order['paymentMethod']==='COD'?'placed':'pending'
             let orderObj = {
@@ -293,7 +290,6 @@ module.exports = {
                 date:new Date()
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response=>{
-                console.log(response,'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
                 // db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)})
                 resolve(response.insertedId)
             }))
@@ -412,7 +408,7 @@ module.exports = {
     verifyPayment:(details)=>{
         return new Promise((resolve, reject)=>{
             const crypto = require('crypto');
-            let hmac = crypto.createHmac('sha256', 'xyM3duBSdGj0LM5YfK4aCj5D')
+            let hmac = crypto.createHmac('sha256', process.env.key_id)
             hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]']);
             hmac = hmac.digest('hex')
             if(hmac==details['payment[razorpay_signature]']){
@@ -442,12 +438,16 @@ module.exports = {
             otpDetails.number=parseInt(otpDetails.number)
             response.status = true
             response.user = user
-            Client.verify.services(OTP.serviceSID)
+            // console.log(process.env.serviceSID,'its env service');
+            Client.verify.services(process.env.serviceSID)
             .verifications
             .create({ to: `+91${otpDetails.number}`, channel: 'sms' })
             .then((verifications) => {
                     console.log(verifications,"hey this is the vrifucatijon")
-            });
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
             resolve(response)
           }else{
             response.status = false
@@ -458,7 +458,7 @@ module.exports = {
     },
     otpConfirm:(otp,userData)=>{
         return new Promise((resolve, reject)=>{
-            Client.verify.services(OTP.serviceSID)
+            Client.verify.services(process.env.serviceSID)
                 .verificationChecks
                 .create({
                     to: `+91${userData.number}`,
@@ -528,7 +528,7 @@ module.exports = {
                 registerednumber.number = parseInt(registerednumber.number)
                 response.status = true
                 response.registerednumber = registerednumber
-                Client.verify.services(OTP.serviceSID)
+                Client.verify.services(process.env.serviceSID)
                     .verifications
                     .create({ to: `+91${registerednumber.number}`, channel: 'sms' })
                     .then((verifications) => {
@@ -551,7 +551,7 @@ module.exports = {
                         password: passDetails.newpassword
                     }
                 })
-            Client.verify.services(OTP.serviceSID)
+            Client.verify.services(process.env.serviceSID)
                 .verificationChecks
                 .create({
                     to: `+91${userNumber}`,
