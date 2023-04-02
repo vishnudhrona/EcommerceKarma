@@ -10,7 +10,7 @@
            <div class="card-body">
            <div class="card-title">Edit Category</div>
            <hr>
-            <form action="/admin/editcategory?id={{response._id}}" method="post" enctype="multipart/form-data">
+            <form action="/admin/editcategory?id={{response._id}}" method="post">
            <div class="form-group">
             <label for="input-1">Category Name</label>
             <input type="text" name="categoryname" class="form-control" id="input-1" placeholder="Enter Category Name" value="{{response.categoryname}}">

@@ -128,15 +128,20 @@ let cartView = async (req, res) => {
     let logIn = req.session.user
     let userId = req.session.user._id
     let products = await userHelpers.getAllCartProducts(userId)
+    console.log(products,'yyyyyyyyyyyuuuuuuuuuuuuuuuuuuuuuuu');
     if(!products){
-        res.render('user/cartEmpty')
+        let errorMessage = "Your Cart Is Empty"
+    res.render('user/cart', { logIn, products, errorMessage})
+    return
     }
     let total =  await userHelpers.getTotalAmount(req.session.user._id)
     if(!total){
-        res.render('user/cartEmpty')
+        let errorMessage = "Your Cart Is Empty"
+        res.render('user/cart', { logIn, products, errorMessage})
+        return
     }
     let banner = await adminHelpers.getAllBanner()
-    res.render('user/cart', { logIn, products,total,user:req.session.user._id, banner })
+    res.render('user/cart', { logIn, products, total, user:req.session.user._id, banner })
 }
 
 let addToCart = (req, res) => {
@@ -173,6 +178,7 @@ let placeCheckout = async (req, res) => {
 }
 
 let placeCheckoutPost = async (req, res)=>{
+    console.log('checked');
     let products = await userHelpers.getCartProductList(req.body.userId)
     if(req.session.couponApplyAmount){
         var totalPrice = await req.session.couponApplyAmount
@@ -180,6 +186,7 @@ let placeCheckoutPost = async (req, res)=>{
        var totalPrice = await userHelpers.getTotalAmount(req.session.user._id)
     }
     userHelpers.checkoutOrder(req.body,products,totalPrice).then((response)=>{
+        console.log(response,'eeeeeeeeeeeeeeeeeeeeeeeeeeeee');
         req.session.orderId = response
        if(req.body['paymentMethod'] ==='COD'){
         products.forEach(element =>{

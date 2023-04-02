@@ -46,7 +46,9 @@ function changeQuantity(cartId,proId,userId,count){
 }
 
 $('#checkoutForm').submit((e)=>{
+    console.log('checkedddddddddddddddd',e);
     e.preventDefault()
+    e.stopImmediatePropagation()
     $.ajax({
         url:'/checkout',
         method:'post',

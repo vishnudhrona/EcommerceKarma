@@ -13,46 +13,49 @@
             </div>
         </div>
         {{/each}}
+
+
         <div class="billing_details">
             <div class="row">
-                <form class="row contact_form" id="checkoutForm" action="" method="post" novalidate="novalidate">
+                <form class="row contact_form" id="checkoutForm">
                 <div class="col-md-8">
                     <h3>Billing Details</h3>
                     
                         <div class="col-md-6 form-group p_star">
                             <input type="text" class="form-control" id="contactName" name="name"
-                                onkeyup="validateName()">
-                            <span class="placeholder" data-placeholder="Name" id="nameError"></span>
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'"
+                                onkeyup="validateName()" placeholder="Name">
+                            <span id="nameError"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
                             <input type="text" class="form-control" id="contactNumber" name="number"
-                                onkeyup="validatePhoneNumber()">
+                                onkeyup="validatePhoneNumber()" placeholder="Contact Number">
                             <input type="text" name="userId" id="" value="{{logIn._id}}" hidden>
-                            <span class="placeholder" data-placeholder="Phone number" id="numberError"></span>
+                            <span id="numberError"></span>
                         </div>
 
                         <div class="col-md-6 form-group p_star">
                             <input type="text" class="form-control" id="contactHouse" name="house"
-                                onkeyup="validateHouse()">
-                            <span class="placeholder" data-placeholder="House/Work" id="houseError"></span>
+                                onkeyup="validateHouse()" placeholder="House">
+                            <span id="houseError"></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="street" name="city">
-                            <span class="placeholder" data-placeholder="Street"></span>
+                            <input type="text" class="form-control" id="street" name="city" placeholder="City">
+                            <span ></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="city" name="town">
-                            <span class="placeholder" data-placeholder="Town/City"></span>
+                            <input type="text" class="form-control" id="city" name="town" placeholder="Town">
+                            <span ></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="country" name="country">
-                            <span class="placeholder" data-placeholder="Country"></span>
+                            <input type="text" class="form-control" id="country" name="country" placeholder="Country">
+                            <span></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
                         </div>
                         <div class="p-4">
-                            <button class="primary-btn" type="submit">Checkout</button>
+                            <button class="primary-btn" type="submit" >Checkout</button>
                             <span class="text-danger" id="submitError"></span>
                         </div>
                         <div class="col-md-12 form-group">

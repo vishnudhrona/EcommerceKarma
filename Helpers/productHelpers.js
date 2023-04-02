@@ -64,6 +64,7 @@ module.exports = {
                     category:proBody.category,
                     price:proBody.price,
                     offerPrice:proBody.offerPrice,
+                    stock:proBody.stock,
                     description:proBody.description,
                     image1: proBody.image1,
                     image2: proBody.image2,

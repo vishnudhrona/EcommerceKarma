@@ -253,7 +253,7 @@ module.exports = {
                  }
     
                 ]).toArray()
-                    resolve(total[0].total)
+                    resolve(total[0]?.total)
          })
         }catch(error){
             console.log("Error: ", error);
@@ -269,6 +269,9 @@ module.exports = {
         })
     },
     checkoutOrder:(order,products,total)=>{
+        // console.log(order,'eeeeeetttttttttttyyyyyyyyyyyyyyyy');
+        // console.log(products,'eeeeeetttttttttttyyyyyyyyyyyyyyyy');
+        // console.log(total,'eeeeeetttttttttttyyyyyyyyyyyyyyyy');
         return new Promise((resolve, reject)=>{
             let status = order['paymentMethod']==='COD'?'placed':'pending'
             let orderObj = {
@@ -290,7 +293,8 @@ module.exports = {
                 date:new Date()
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response=>{
-                db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)})
+                console.log(response,'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+                // db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)})
                 resolve(response.insertedId)
             }))
         })

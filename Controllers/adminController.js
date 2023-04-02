@@ -121,6 +121,7 @@ let editProduct = async (req, res) => {
 
 let editProductPost = async (req, res) => {
     req.body.price = parseInt(req.body.price)
+    req.body.stock = parseInt(req.body.stock)
     let proId = req.query.id
     let proBody = req.body
     if (req.files.image1 == null) {
@@ -196,7 +197,6 @@ let editCategory = (req, res) => {
 
 let editCategorytPost = (req, res) => {
     let catId = req.query.id
-    console.log(catId,'yyyyyyyyyyyyyyyyyyyyyyyyyyyy');
     let catBody = req.body
     categoryHelpers.updateCategory(catId, catBody).then((response) => {
         res.redirect('/admin/categorymanagement')
@@ -318,6 +318,7 @@ let orderManagement = async (req, res) => {
 let viewProduct = async (req, res) => {
     ordId = req.query.id
     let oneProduct = await adminHelpers.getOneProduct(ordId)
+    console.log(oneProduct,'ffffffffffffffffffffffffffffffffffff');
     res.render('admin/productView', { layout: 'adminLayout', oneProduct })
 }
 
