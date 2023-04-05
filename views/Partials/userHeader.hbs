@@ -12,8 +12,9 @@
 					</button>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+						<ul class="nav navbar-nav menu_nav ml-auto" >
+							<li class="nav-item active"><a class="nav-link" href="/">Home</a></li> 	
+							{{#if logIn}}
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Shop</a>
@@ -22,21 +23,19 @@
 									<li class="nav-item"><a class="nav-link" href="/myorder">My Orders</a></li>
 								</ul>
 							</li>
+							{{/if}}
 							<li class="nav-item submenu dropdown">
 								{{#if logIn}}
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Hi, {{logIn.name}}</a>
 								 {{else}}
-								 <a href="/userlogin" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Sign in</a>
+								 <li class="nav-item"><a class="nav-link" href="/userlogin">Sign In</a></li>
 								 {{/if}}
 								<ul class="dropdown-menu">
 									{{#if logIn}}
 									<li class="nav-item"><a class="nav-link" href="/userlogout">LogOut</a></li>
-									{{else}}
-									<li class="nav-item"><a class="nav-link" href="/userlogin">Login</a></li>
-									{{/if}}
 									<li class="nav-item"><a class="nav-link" href="/userprofile">My Profile</a></li>
+									{{/if}}
 								</ul>
 							</li>
 						</ul>

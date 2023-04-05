@@ -1,3 +1,10 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"></script>
+<script src="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+
 <div class="clearfix"></div>
 
 <div class="content-wrapper">
@@ -65,23 +72,31 @@
       <div class="col-md-12 p-3">
         <div class="card ">
           <div class="card-body">
-            <h5 class="card-title">Product details</h5>
+            <h5 class="card-title"></h5>
             <div class="table-responsive">
-              <table class="table table-striped">
+              <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                   <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Coupon Name</th>
-                    <th scope="col">Coupon Code</th>
-                    <th scope="col">Minimum Amount</th>
-                    <th scope="col">Maximum Amount</th>
-                    <th scope="col">Expire Date</th>
-                    <th scope="col">Coupon Percentage</th>
-                    <th scope="col">Activities</th>
+                    <th class="th-sm">No
+                    </th>
+                    <th class="th-sm">Coupon Name
+                    </th>
+                    <th class="th-sm">Coupon Code
+                    </th>
+                    <th class="th-sm">Minimum Amount
+                    </th>
+                    <th class="th-sm">Maximum Amount
+                    </th>
+                    <th class="th-sm">Expire Date
+                    </th>
+                    <th class="th-sm">Coupon Percentage
+                    </th>
+                    <th class="th-sm">Activities
+                    </th>
                   </tr>
                 </thead>
-                {{#each coupon}}
                 <tbody>
+                  {{#each coupon}}
                   <tr>
                     <th scope="row">{{math @index "+"1}}</th>
                     <td>{{this.couponName}}</td>
@@ -95,8 +110,8 @@
                       <a href="/admin/deleteCoupon?id={{this._id}}" class="btn btn-danger">Delete</a>
                     </td>
                   </tr>
+                  {{/each}}
                 </tbody>
-                {{/each}}
               </table>
             </div>
           </div>
@@ -115,16 +130,12 @@
   <!--Start Back To Top Button-->
   <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
   <!--End Back To Top Button-->
-
-  <div class="product__pagination mt-5">
-    {{#each pageCount}}
-    <a href="/admin/couponmanagement?id={{this}}" class="text-white"> <button
-        class="btn btn-secondary rounded">{{this}}</button></a>
-    {{/each}}
-    {{!-- {{#unless (next to last page)}} --}}
-    <a href="#"><i class="fa-sharp fa-solid fa-circle-chevron-right text-muted"></i></a>
-    {{!-- {{/unless}} --}}
-  </div>
+  <script>
+    $(document).ready(function () {
+      $('#dtBasicExample').DataTable();
+      $('.dataTables_length').addClass('bs-select');
+    });
+  </script>
 
   <script>
     function validatePercentage() {

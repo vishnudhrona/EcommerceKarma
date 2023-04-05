@@ -19,12 +19,14 @@
 						<h3>Otp Log in</h3>
 						<form class="row login_form" action="/otplogin" method="post" id="contactForm" novalidate="novalidate">
 							<div class="col-md-12 form-group">
-								<input type="number" class="form-control" id="name" name="number" placeholder="Enter Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+								<input type="textbox" class="form-control" id="name" name="number" value="" placeholder="Enter Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Number'"
+								onkeyup="validateOtp()">
+								<span class="text-danger" id="texterror"></span>
 							</div>
 							<div class="col-md-12 form-group">
 							</div>
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="primary-btn">Log In</button>
+								<button type="submit" id="otpsubmit" value="submit" class="primary-btn">Log In</button>
 							</div>
 						</form>
 					</div>
@@ -38,3 +40,16 @@
 </body>
 
 </html>
+
+<script>
+	function validateOtp(){
+		const num = document.getElementById("name").value
+		console.log(num,'jjjjjjjjjjj')
+		if(isNaN(num)){
+			document.getElementById("texterror").innerHTML = "Enter Number"
+			document.querySelector('#otpsubmit').disabled = true;
+		}else{
+			document.querySelector('#otpsubmit').disabled = false;
+		}
+	}
+</script>

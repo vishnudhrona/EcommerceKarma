@@ -129,6 +129,9 @@ let cartView = async (req, res) => {
     let logIn = req.session.user
     let userId = req.session.user._id
     let products = await userHelpers.getAllCartProducts(userId)
+    let stock = products[0].product.stock
+    let quantity = products[0].quantity
+    // let quantity = data[0].product.stock
     if(!products){
         let errorMessage = "Your Cart Is Empty"
     res.render('user/cart', { logIn, products, errorMessage})
@@ -140,8 +143,18 @@ let cartView = async (req, res) => {
         res.render('user/cart', { logIn, products, errorMessage})
         return
     }
+    // if(quantity > stock - 2){
+    //     console.log(stock,'uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu');
+    //     let errMessage = "Out Of Stock"
+    //     res.render('user/cart',{ logIn, products, errMessage })
+    // }
     let banner = await adminHelpers.getAllBanner()
     res.render('user/cart', { logIn, products, total, user:req.session.user._id, banner })
+    // let proQuantity = req.session.proq
+    // console.log(proQuantity,'tttttttttttttttttttttttttttttt' );
+    // let stock =  productHelpers.getStock(req.query.id).then((response) => {
+    //     console.log(stock,'ttttttttttttttwwwwwwwwwwwwwwwwwwwwwwww');
+    // })
 }
 
 let addToCart = (req, res) => {
@@ -156,6 +169,7 @@ let addToCart = (req, res) => {
 }
 
 let changeProductQuantity = (req, res, next) => {
+    req.session.proq = req.body.quantity
     userHelpers.changeProductQuantity(req.body).then(async (response) => {
         response.total = await userHelpers.getTotalAmount(req.body.user)
         res.json(response)

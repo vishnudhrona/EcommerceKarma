@@ -1,53 +1,93 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"></script>
+<script src="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
 
 <div class="clearfix"></div>
-  <div class="content-wrapper">
-    <div class="container-fluid">
-      <div class="row ">
-        <a class="btn btn-primary ml-5" href="/admin/addcategory">Add Category</a>
-        <div class="col-md-12 p-3">
-          <div class="card ">
-            <div class="card-body">
-              <h5 class="card-title">Striped Table</h5>
-			  <div class="table-responsive">
-               <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">No</th>
-                      <th scope="col">Category Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Activities</th>
-                    </tr>
-                  </thead>
-
-                  {{#each products}}
-                  <tbody>
-                    <tr>
-                      <th scope="row">{{math @index "+"1}}</th>
-                      <td>{{this.categoryname}}</td>
-                      <td>{{this.description}}</td>
-                      <td>
-                        <a href="/admin/editcategory?id={{this._id}}" class="btn btn-primary">Edit</a>
-                        <a href="/admin/deletecategory?id={{this._id}}" class="btn btn-danger">Delete</a>
-                      </td>
-                    </tr>
-                  </tbody>
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="row ">
+      <a class="btn btn-primary ml-5" href="/admin/addcategory">Add Category</a>
+      <div class="col-md-12 p-3">
+        <div class="card ">
+          <div class="card-body">
+            <h5 class="card-title"></h5>
+            <div class="table-responsive">
+              <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <th class="th-sm">No
+                    </th>
+                    <th class="th-sm">Category Name
+                    </th>
+                    <th class="th-sm">Description
+                    </th>
+                    <th class="th-sm">Activities
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {{#each products}}
+                    <th scope="row">{{math @index "+"1}}</th>
+                    <td>{{this.categoryname}}</td>
+                    <td>{{this.description}}</td>
+                    <td>
+                      <a href="/admin/editcategory?id={{this._id}}" class="btn btn-primary">Edit</a>
+                      <a href="/admin/deletecategory?id={{this._id}}" class="btn btn-danger">Delete</a>
+                    </td>
+                  </tr>
                   {{/each}}
 
-                </table>
-            </div>
+                </tbody>
+              </table>
+              {{!-- <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Activities</th>
+                  </tr>
+                </thead>
+
+                {{#each products}}
+                <tbody>
+                  <tr>
+                    <th scope="row">{{math @index "+"1}}</th>
+                    <td>{{this.categoryname}}</td>
+                    <td>{{this.description}}</td>
+                    <td>
+                      <a href="/admin/editcategory?id={{this._id}}" class="btn btn-primary">Edit</a>
+                      <a href="/admin/deletecategory?id={{this._id}}" class="btn btn-danger">Delete</a>
+                    </td>
+                  </tr>
+                </tbody>
+                {{/each}}
+
+              </table> --}}
             </div>
           </div>
         </div>
-	  <!--start overlay-->
-		  <div class="overlay toggle-menu"></div>
-		<!--end overlay-->
+      </div>
+      <!--start overlay-->
+      <div class="overlay toggle-menu"></div>
+      <!--end overlay-->
 
     </div>
     <!-- End container-fluid-->
-    
-    </div><!--End content-wrapper-->
-   <!--Start Back To Top Button-->
-    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-    <!--End Back To Top Button-->
-	
-	
+
+  </div><!--End content-wrapper-->
+  <!--Start Back To Top Button-->
+  <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+  <!--End Back To Top Button-->
+
+
+  <script>
+    $(document).ready(function () {
+      $('#dtBasicExample').DataTable();
+      $('.dataTables_length').addClass('bs-select');
+    });
+  </script>

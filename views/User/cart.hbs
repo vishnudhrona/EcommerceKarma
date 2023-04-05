@@ -9,7 +9,7 @@
                             <th scope="col">Product</th>
                             <th scope="col">Price</th>
                             <th scope="col">Quantity</th>
-                            <th scope="col">Stock</th>
+                            {{!-- <th scope="col">Stock</th> --}}
 
                         </tr>
                     </thead>
@@ -33,22 +33,17 @@
                                 <h5>{{this.product.offerprice}}</h5>
                             </td>
                             <td>
-                                <div class="product_count">
-                                    <button class=""
-                                        onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',1)"
-                                        class="increase items-count" type="button"><i
-                                            class="lnr lnr-chevron-up btn btn-primary"
-                                            style="padding: 0px;"></i></button><br>
+                                
+                                <div class="container" style="display: flex;">
+                                <div class="">
+                                    <button class="cart-item-count btn btn-outline-dark" style="font-size: 5px; padding: 2px 8px;" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',1)" class="" type="button"><i class="lnr lnr-chevron-up"></i></button>
                                     <span id="{{this.product._id}}">{{this.quantity}}</span>
-                                    <button class=""
-                                        onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-1)"
-                                        class="reduced items-count" type="button"><i
-                                            class="lnr lnr-chevron-down btn btn-primary"
-                                            style="padding: 0px;"></i></button>
+                                    <button class="cart-item-count btn btn-outline-dark" style="font-size: 5px; padding: 2px 8px;" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-1)" class="" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                </div>
                                 </div>
                             </td>
                             <td>
-                                <h5>{{this.product.stock}}</h5>
+                                {{!-- <h5 id="stock">{{this.product.stock}}</h5> --}}
                             </td>
                             <td>
 
@@ -180,5 +175,6 @@
 </script>
 
 <script>
-    document.getElementById('stock').value
+const renderedTemplate = Handlebars.compile("<h5>{{this.stock}}</h5>")(templateData);   
+console.log(renderedTemplate,'tttttttttttt')
 </script>
