@@ -42,7 +42,7 @@
                                 </div>
                             </td>
                             <td>
-                                <h5 id="stock" class="text-danger">{{this.product.stock}}</h5>
+                                <h5 id="{{this.product._id}}stock" class="text-danger">{{this.product.stock}}</h5>
                             </td>
                             <td>
 
@@ -145,7 +145,6 @@
 <script>
     function applyCoupon() {
         let coupon = document.getElementById('couponCode').value;
-        console.log(coupon, 'uuuuuuuiiiiiiiiiii');
         $.ajax({
             url: '/applycoupon',
             data: {
@@ -153,7 +152,6 @@
             },
             method: 'post',
             success: (response) => {
-                console.log(response, 'nnnnnnnnnnnnnjjjjjjjjjkkkkkkkk')
                 if (response.error != true) {
                     document.getElementById('discount').innerHTML = "Discount Amount : ₹ " + response.discountAmount
                     document.getElementById('percentage').innerHTML = "Discount Percentage : " + response.couponData.couponPercentage + '%'
@@ -162,7 +160,6 @@
                 } else if (response.error) {
                     document.getElementById('errorMg').innerHTML = "invalid coupon"
                     alert("Invalid Coupon")
-                    console.log("uuuuuuuuuuuuuuuuuuuu")
                 }
                 else if (response.invalidDate) {
                     alert("Invalid Date")
@@ -171,9 +168,4 @@
             }
         })
     }
-</script>
-
-<script>
-const renderedTemplate = Handlebars.compile("<h5>{{this.stock}}</h5>")(templateData);   
-console.log(renderedTemplate,'tttttttttttt')
 </script>
