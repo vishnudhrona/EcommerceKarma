@@ -19,7 +19,7 @@ function addToCart(productId){
 
 function changeQuantity(cartId,proId,userId,count){
     let quantity = parseInt(document.getElementById(proId).innerHTML)
-    let stock = parseInt(document.getElementById(proId+'stock').innerHTML)
+    let stock = parseInt(document.getElementById(`${proId}stock`).innerHTML)
     count = parseInt(count)
     
     $.ajax({
@@ -42,9 +42,9 @@ function changeQuantity(cartId,proId,userId,count){
                document.getElementById(proId).innerHTML =quantity+count
                document.getElementById('total').innerHTML =response.total
                 if(response.stockValue>0){
-                    document.getElementById(proId+'stock').innerHTML = response.stockValue;
+                    document.getElementById(`${proId}stock`).innerHTML = response.stockValue;
                 }else{
-                    document.getElementById(proId+'stock').innerHTML =  'Please Check the Stock Out of stock!'
+                    document.getElementById(`${proId}stock`).innerHTML =  'Please Check the Stock Out of stock!'
                     document.querySelector('#checkoutbtn').disabled = true;
                     
                 }
