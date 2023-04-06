@@ -129,7 +129,6 @@ let cartView = async (req, res) => {
     let logIn = req.session.user
     let userId = req.session.user._id
     let products = await userHelpers.getAllCartProducts(userId)
-    console.log(products,'iiiiiiiiiiiiiiooooooooooooo');
     if(!products){
         let errorMessage = "Your Cart Is Empty"
     res.render('user/cart', { logIn, products, errorMessage})
@@ -199,7 +198,6 @@ let placeCheckoutPost = async (req, res)=>{
        var totalPrice = await userHelpers.getTotalAmount(req.session.user._id)
     }
     userHelpers.checkoutOrder(req.body,products,totalPrice).then((response)=>{
-        console.log(response,'eeeeeeeeeeeeeeeeeeeeeeeeeeeee');
         req.session.orderId = response
        if(req.body['paymentMethod'] ==='COD'){
         products.forEach(element =>{
@@ -431,7 +429,11 @@ let shopProduct = async (req, res) => {
         });
         products = arr;
     }
-    res.render('user/shopProduct', { logIn, products, cartCount, pageCount, count })
+    if (req.session.user) {
+        wishCount = await userHelpers.getWishCount(req.session.user._id)
+    }
+    let wishProduct = await userHelpers.getAllWishlistProduct(req.session.user._id)
+    res.render('user/shopProduct', { logIn, products, cartCount, pageCount, count, wishCount, wishProduct })
 }
 /* ---------------------------------------End Shop Product-----------------------------------------------------*/
 

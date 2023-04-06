@@ -28,7 +28,6 @@ module.exports = {
                 let error = {}
                 error.message = 'Something went wrong'
                 reject(error)
-
             }
         })
     },

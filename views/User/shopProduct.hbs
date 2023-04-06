@@ -22,10 +22,13 @@
                         {{!-- <a class="social-info ti-bag hover-text lnr ti-bag"
                             onclick="addToCart('{{this._id}}')">add to
                             bag</a> --}}
+                        {{#if this.stock}}
                         <a class="social-info">
                             <span class="lnr ti-bag" onclick="addToCart('{{this._id}}')"></span>
                             <p class="hover-text">add to bag</p>
-
+                        {{else}}
+                        <span class="text-danger">Out of Stock</span>
+						{{/if}}
                         </a>
                         <a href="" class="social-info">
                             <span class="lnr lnr-heart"></span>
