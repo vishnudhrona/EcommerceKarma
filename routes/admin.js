@@ -10,7 +10,6 @@ const saveImage = require('../middleware/multer');
 
 const multerStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-      console.log('i am innnnnnnnnnnnnnnnnnnn');
       cb(null, "./public/productImage");
     },
     filename: function (req, file, cb) {
