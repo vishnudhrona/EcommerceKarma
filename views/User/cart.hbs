@@ -1,3 +1,4 @@
+  <link href="toastr.min.css" rel="stylesheet"/>
 <!--================Cart Area =================-->
 <section class="cart_area">
     <div class="container" style="padding-top: 80px;">
@@ -48,8 +49,7 @@
 
                             </td>
                             <td>
-                                <button class="btn btn-danger"
-                                    onclick="deleteCartProduct('{{this._id}}','{{this.product._id}}')">X</button>
+                                <button class="btn btn-danger" id="show-toast-btn" onclick="deleteCartProduct('{{this._id}}','{{this.product._id}}')">X</button>
                             </td>
                         </tr>
                         {{/each}}
@@ -140,6 +140,10 @@
     </div>
 </section>
 <!--================End Cart Area =================-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
 <script>
@@ -168,4 +172,17 @@
             }
         })
     }
+</script>
+
+<script>
+  
+ // Get a reference to the button
+const showToastBtn = document.querySelector('#show-toast-btn');
+
+// Add a click event listener to the button
+showToastBtn.addEventListener('click', function() {
+  // Display a Toastr message
+  toastr.success('Successfully Deleted');
+});
+
 </script>

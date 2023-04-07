@@ -31,6 +31,7 @@
                                 
                                 <td>
                                     {{!-- <button class="btn btn-primary" onclick="deleteCartProduct('{{this._id}}','{{this.product._id}}')">Add to Cart</button> --}}
+							        <button class="btn btn-primary" onclick="addToCart('{{this.wishItems._id}}')">Add to Cart</button>
                                     <button class="btn btn-danger" onclick="deleteWishlistProduct('{{this._id}}','{{this.wishItems._id}}')">X</button>
                                 </td>
                             </tr>
@@ -58,7 +59,6 @@
 
     <script>
         function deleteWishlistProduct(wishId,productId){
-            console.log(wishId,productId,'dddddddddddddhhhhhhhggggggggg')
     $.ajax({
         url:'/deletewishproduct/',
         data: {
@@ -75,3 +75,24 @@
     })
 }
     </script>
+
+    <script>
+       function addToCart(productId){
+    $.ajax({
+        url:'/addtocart/'+productId,
+        method:'get',
+        success:(response)=>{
+            
+            if(response.status){
+                
+                let count = $('#cartCount').html()
+                count = parseInt(count)+1
+                $('#cartCount').html(count)
+            }
+            swal("Product Added!", "!", "success");
+        }
+    })
+}
+    </script>
+
+    

@@ -1,5 +1,55 @@
-<div class="container">
-    <div class="row">
-        <h1 style="color: rgb(216, 101, 101);">Your Cart is Empty</h1>
+<section class="cart_area">
+    <div class="container" style="padding-top: 80px;">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                            
+                                {{#if errorMessage}}
+                                <div class="">
+                                    <h3 style="padding-left: 380px; color: red;">{{errorMessage}}</h3>
+                                    <a class="btn btn-info" href="/shopproduct" style="margin-left: 412px;">Continue Shopping</a>
+                                </div>
+                                {{/if}}
+                                
+
+                            
+                            
+                            
+                            {{!-- {{#unless errorMessage}}
+                            <td>
+                                <div class="cupon_text d-flex align-items-center">
+                                    <span id="errorMg" style="color: red;"></span>
+                                    <input type="text" name="coupon" id="couponCode" placeholder="Enter coupon code">
+                                    <input type="text" name="userId" id="user" value="{{logIn._id}}" hidden>
+                                    <button class="primary-btn" onclick="applyCoupon()">Apply</button>
+                                    <a class="gray_btn" href="#" hidden>Close Coupon</a>
+                                </div>
+                            </td>
+                            {{/unless}} --}}
+                        
+                        {{!-- <tr>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <h5>Total</h5>
+                            </td>
+                            <td>
+                                <span id="total">{{total}}</span>
+                            </td>
+                        </tr> --}}
+                        
+
+                            
+                            
+                        
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
+</section>

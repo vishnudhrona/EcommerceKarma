@@ -131,13 +131,13 @@ let cartView = async (req, res) => {
     let products = await userHelpers.getAllCartProducts(userId)
     if(!products){
         let errorMessage = "Your Cart Is Empty"
-    res.render('user/cart', { logIn, products, errorMessage})
+    res.render('user/cartEmpty', { logIn, products, errorMessage})
     return
     }
     let total =  await userHelpers.getTotalAmount(req.session.user._id)
     if(!total){
         let errorMessage = "Your Cart Is Empty"
-        res.render('user/cart', { logIn, products, errorMessage})
+        res.render('user/cartEmpty', { logIn, products, errorMessage})
         return
     }
     
@@ -441,6 +441,8 @@ let shopProduct = async (req, res) => {
 let wishList = async(req,res)=>{
     logIn = req.session.user
     let userId = req.session.user._id
+    let productId = req.session.proId
+    console.log();
     let wishCount = null
     if (req.session.user) {
         wishCount = await userHelpers.getWishCount(req.session.user._id)
@@ -461,6 +463,15 @@ let deleteWishProduct = (req, res)=>{
     userHelpers.deleteWishProduct(req.body)
     res.json({status:true})
 
+}
+
+let addToCartWish = (req, res) => {
+    let userId = req.session.user._id
+    let proId = req.params.id
+    userHelpers.addToCartWish(proId).then(() => {
+        console.log('yyyyyyyyyyyyyyyyyyy');
+        res.json({status:true})
+    })
 }
 /* ---------------------------------------End WishList---------------------------------------------------------*/
 
@@ -501,4 +512,5 @@ module.exports = {
     wishList,
     addTowishList,
     deleteWishProduct,
+    addToCartWish
 }

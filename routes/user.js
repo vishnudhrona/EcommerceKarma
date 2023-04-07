@@ -101,6 +101,8 @@ router.get('/wishlist',userControllers.wishList)
 router.get('/addTowishlist/:id',userControllers.addTowishList)
 
 router.post('/deletewishproduct',userControllers.deleteWishProduct)
+
+router.get('/addToCartwishlist/:id', userControllers.addToCartWish)
 /* ---------------------------------------End WishList-------------------------------------------------------*/
 
 

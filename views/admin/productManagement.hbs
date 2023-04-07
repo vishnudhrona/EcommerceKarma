@@ -78,6 +78,7 @@
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
+  <link href="toastr.min.css" rel="stylesheet"/>
 
 <div class="content-wrapper">
   <div class="container-fluid">
@@ -123,8 +124,8 @@
                     <td>{{this.description}}</td>
                     <td><img style="height: 50px; width: 50px;" src='/productImage/{{this.image1}}' alt=""></td>
                     <td>
-                      <a href="/admin/editproduct?id={{this._id}}" class="btn btn-primary">Edit</a>
-                      <a href="/admin/deleteproduct?id={{this._id}}" class="btn btn-danger">Delete</a>
+                      <a href="/admin/editproduct?id={{this._id}}" class="btn btn-primary" >Edit<a/>
+                      <a href="/admin/deleteproduct?id={{this._id}}" class="btn btn-danger" id="show-toast-btn">Delete</a>
                     </td>
                   </tr>
                   {{/each}}
@@ -138,6 +139,11 @@
   </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
   {{!-- <div class="container" style="padding-left: 250px;">
     <div class="row">
 
@@ -146,11 +152,7 @@
 
   
 
- {{!-- <script>
-    $(document).ready(function () {
-      $('#example').DataTable();
-    });
-  </script> --}}
+ 
 <script>
   $(document).ready(function () {
 $('#dtBasicExample').DataTable();
@@ -158,6 +160,30 @@ $('.dataTables_length').addClass('bs-select');
 });
 </script>
 
+
+<style>
+  /* Override default styles */
+.toast-success {
+  background-color: rgb(51, 197, 51); /* Green background color */
+  color: #f1efef; /* White font color */
+  width: 100px;
+}
+
+</style>
+
+
+<script>
+  
+ // Get a reference to the button
+const showToastBtn = document.querySelector('#show-toast-btn');
+
+// Add a click event listener to the button
+showToastBtn.addEventListener('click', function() {
+  // Display a Toastr message
+  toastr.success('Successfully Deleted');
+});
+
+</script>
 
 
 

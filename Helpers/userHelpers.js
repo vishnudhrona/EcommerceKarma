@@ -10,6 +10,7 @@ const OTP = require("../Config/OTP");
 const Client = require("twilio")(process.env.accountSID, process.env.authToken);
 
 const uuid = require("uuid");
+const { log } = require("console");
 
 var instance = new Razorpay({
   key_id: process.env.key_id,
@@ -876,4 +877,51 @@ module.exports = {
       reject(error);
     }
   },
+  addToCartWish:(proId, userId) => {
+    console.log('eeeeeeeeeeeeeeeeeeeeeeeee');
+    let proObj = {
+      item: objectId(productId),
+      quantity: 1,
+    };
+    return new Promise((resolve, reject) => {
+     let userCart = db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)})
+     if (userCart) {
+      let proExist = userCart.products.findIndex(
+        (product) => product.item == productId
+      );
+      if (proExist != -1) {
+        db.get().collection(collection.CART_COLLECTION).updateOne(
+            {
+              user: objectId(userId),
+              "products.item": objectId(productId),
+            },
+            {
+              $inc: { "products.$.quantity": 1 },
+            }
+          )
+          .then(() => {
+            resolve();
+          });
+      } else {
+        db.get().collection(collection.CART_COLLECTION).updateOne({ user: objectId(userId) },
+            {
+              $push: { products: proObj },
+            }
+          )
+          .then((response) => {
+            resolve();
+          });
+      }
+    }else {
+      let cartObj = {
+        user: objectId(userId),
+        products: [proObj],
+      };
+      db.get().collection(collection.CART_COLLECTION).insertOne(cartObj) .then((response) => {
+          resolve();
+        });
+      }
+    })
+  },
+
 };
